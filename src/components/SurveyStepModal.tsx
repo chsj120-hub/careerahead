@@ -257,21 +257,24 @@ export const SurveyStepModal: React.FC<SurveyStepModalProps> = ({
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-950/75 backdrop-blur-sm overflow-y-auto"
+      className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-950/80 backdrop-blur-sm overflow-y-auto"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="survey-modal-title"
       onClick={(e) => {
         if (e.target === e.currentTarget) handleRequestClose();
       }}
     >
-      <div className="bg-white rounded-3xl max-w-2xl w-full shadow-2xl border-4 border-indigo-200 overflow-hidden flex flex-col max-h-[96vh] sm:max-h-[92vh] animate-in zoom-in-95 duration-200 relative">
+      <div className="bg-white rounded-3xl max-w-2xl w-full shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[96vh] sm:max-h-[92vh] animate-in zoom-in-95 duration-200 relative">
         
         {/* Top RPG Header */}
-        <div className="bg-gradient-to-r from-indigo-800 via-indigo-700 to-indigo-900 p-3.5 sm:p-5 text-white relative">
+        <div className="bg-slate-900 text-white p-3.5 sm:p-5 relative border-b border-slate-800">
           <div className="flex items-center justify-between mb-2.5 sm:mb-3">
             <div className="flex items-center gap-1.5 sm:gap-2">
-              <span className="px-2.5 py-1 bg-amber-400 text-slate-950 rounded-lg font-black text-xs flex items-center gap-1.5 shadow-sm">
-                <Trophy className="w-3.5 h-3.5" /> 퀘스트 {currentStepIndex + 1} / 8
+              <span className="px-2.5 py-1 bg-amber-400 text-slate-950 rounded-lg font-black text-xs flex items-center gap-1.5 shadow-xs">
+                <Trophy className="w-3.5 h-3.5" aria-hidden="true" /> 퀘스트 {currentStepIndex + 1} / 8
               </span>
-              <span className="text-xs px-2 sm:px-2.5 py-1 rounded-md bg-indigo-950/60 text-amber-300 font-bold border border-indigo-600/40">
+              <span className="text-xs px-2.5 py-1 rounded-md bg-indigo-950 text-indigo-200 font-bold border border-indigo-700/50">
                 {currentConfig.category}
               </span>
             </div>
@@ -369,7 +372,7 @@ export const SurveyStepModal: React.FC<SurveyStepModalProps> = ({
                 {currentConfig.isMultiSelect ? `복수 선택 (최대 ${currentConfig.maxSelect}개)` : '단일 선택 (1개)'}
               </span>
             </div>
-            <h3 className="text-base sm:text-lg font-black text-slate-900 mt-1.5 tracking-tight">
+            <h3 id="survey-modal-title" className="text-base sm:text-lg font-black text-slate-900 mt-1.5 tracking-tight">
               {currentConfig.title}
             </h3>
             <p className="text-xs sm:text-sm text-slate-500 mt-0.5">

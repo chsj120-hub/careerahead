@@ -108,18 +108,22 @@ export const ExploreJobsView: React.FC<ExploreJobsViewProps> = ({
         {/* Search Bar & Sort Dropdown */}
         <div className="flex flex-col sm:flex-row gap-3 pt-2">
           <div className="relative flex-1">
-            <Search className="w-5 h-5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+            <label htmlFor="job-search-input" className="sr-only">직업명 또는 키워드 검색</label>
+            <Search className="w-5 h-5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" aria-hidden="true" />
             <input
+              id="job-search-input"
               type="text"
               placeholder="직업명, 키워드 검색 (예: 개발자, 카페, 반도체, AI 등)"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-11 pr-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 focus:bg-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 text-sm font-medium outline-none transition-all"
+              className="w-full pl-11 pr-14 py-3 rounded-2xl bg-slate-50 border border-slate-300 focus:bg-white focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 text-sm font-medium outline-hidden transition-all text-slate-900 placeholder:text-slate-400"
             />
             {searchQuery && (
               <button
+                type="button"
                 onClick={() => setSearchQuery('')}
-                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs text-slate-400 hover:text-slate-600"
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate-500 hover:text-slate-800 p-1"
+                aria-label="검색어 지우기"
               >
                 지우기
               </button>
@@ -128,11 +132,13 @@ export const ExploreJobsView: React.FC<ExploreJobsViewProps> = ({
 
           {/* Sort Selector */}
           <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto">
-            <SlidersHorizontal className="w-4 h-4 text-slate-400 shrink-0" />
+            <SlidersHorizontal className="w-4 h-4 text-slate-500 shrink-0" aria-hidden="true" />
+            <label htmlFor="job-sort-select" className="sr-only">직업 정렬 기준</label>
             <select
+              id="job-sort-select"
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as any)}
-              className="w-full sm:w-auto py-3 px-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs sm:text-sm font-bold text-slate-700 focus:outline-none focus:border-indigo-500"
+              className="w-full sm:w-auto py-3 px-3.5 rounded-2xl bg-slate-50 border border-slate-300 text-xs sm:text-sm font-bold text-slate-800 focus:outline-hidden focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200 cursor-pointer"
             >
               <option value="default">기본 추천순 (친근한 순)</option>
               <option value="top10Salary">👑 상위 10% 고점 높은순</option>
@@ -143,24 +149,31 @@ export const ExploreJobsView: React.FC<ExploreJobsViewProps> = ({
           </div>
         </div>
 
-        {/* Category Pills Slider (Touch Friendly on Mobile) */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-2 pt-1 scrollbar-none touch-pan-x -mx-1 px-1">
+        {/* Category Pills Slider (Touch Friendly on Mobile with semantic tablist) */}
+        <div 
+          role="tablist" 
+          aria-label="직업 카테고리 필터"
+          className="flex items-center gap-2 overflow-x-auto pb-2 pt-1 scrollbar-none touch-pan-x -mx-1 px-1"
+        >
           {CATEGORIES_INFO.map(cat => {
             const isSelected = selectedCategory === cat.id;
             return (
               <button
                 key={cat.id}
+                type="button"
+                role="tab"
+                aria-selected={isSelected}
                 onClick={() => setSelectedCategory(cat.id)}
-                className={`flex items-center gap-1.5 px-3 sm:px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all active:scale-95 shrink-0 ${
+                className={`flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all active:scale-95 shrink-0 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-indigo-600 min-h-[40px] ${
                   isSelected
-                    ? 'bg-slate-900 text-white shadow-md shadow-slate-300'
-                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                    ? 'bg-slate-900 text-white shadow-sm ring-1 ring-slate-950'
+                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200/60'
                 }`}
               >
-                <span>{cat.icon}</span>
+                <span aria-hidden="true">{cat.icon}</span>
                 <span>{cat.name}</span>
-                <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${
-                  isSelected ? 'bg-slate-700 text-white' : 'bg-slate-200 text-slate-700'
+                <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
+                  isSelected ? 'bg-slate-700 text-slate-100' : 'bg-slate-200 text-slate-700'
                 }`}>
                   {cat.count}
                 </span>

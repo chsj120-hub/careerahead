@@ -120,44 +120,48 @@ export const JobDetailModal: React.FC<JobDetailModalProps> = ({
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-900/80 backdrop-blur-sm overflow-y-auto"
+      className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-950/80 backdrop-blur-sm overflow-y-auto"
       onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="job-modal-title"
     >
       <div 
-        className="bg-white rounded-3xl max-w-3xl w-full shadow-2xl border-4 border-indigo-200 overflow-hidden flex flex-col max-h-[96vh] sm:max-h-[92vh] animate-in fade-in zoom-in-95 duration-200"
+        className="bg-white rounded-3xl max-w-3xl w-full shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[96vh] sm:max-h-[92vh] animate-in fade-in zoom-in-95 duration-200"
         onClick={(e) => e.stopPropagation()}
       >
         
         {/* Modal Top Header (RPG Item Header) */}
-        <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white p-4 sm:p-6 relative border-b-2 border-indigo-500/30">
+        <div className="bg-slate-900 text-white p-4 sm:p-6 relative border-b border-slate-800">
           <button
+            type="button"
             onClick={onClose}
-            className="absolute top-3.5 right-3.5 sm:top-4 sm:right-4 p-2 rounded-full bg-slate-800/80 text-slate-300 hover:text-white hover:bg-slate-700 transition-colors z-10"
-            aria-label="닫기"
+            className="absolute top-3.5 right-3.5 sm:top-4 sm:right-4 p-2.5 rounded-full bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700 transition-colors z-10 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-indigo-400"
+            aria-label="상세 정보 창 닫기"
           >
-            <X className="w-5 h-5" />
+            <X className="w-5 h-5" aria-hidden="true" />
           </button>
 
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 pr-8 sm:pr-10">
             <div className="flex items-start sm:items-center gap-3 sm:gap-4">
-              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-tr from-indigo-500 to-amber-400 p-0.5 shadow-lg shrink-0">
-                <div className="w-full h-full bg-slate-900 rounded-[14px] flex items-center justify-center text-3xl sm:text-4xl">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-indigo-600 p-0.5 shadow-sm shrink-0 flex items-center justify-center">
+                <span className="text-3xl sm:text-4xl" aria-hidden="true">
                   {job.icon}
-                </div>
+                </span>
               </div>
               <div className="min-w-0">
                 <div className="flex flex-wrap items-center gap-1.5 mb-1">
-                  <span className="text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded-full bg-indigo-500/30 text-indigo-300 border border-indigo-400/30">
+                  <span className="text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded-full bg-indigo-900/80 text-indigo-200 border border-indigo-700/60">
                     {job.categoryName}
                   </span>
-                  <span className="text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30">
+                  <span className="text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/40">
                     {job.badge}
                   </span>
                 </div>
-                <h2 className="text-lg sm:text-2xl font-black text-white tracking-tight">
+                <h2 id="job-modal-title" className="text-lg sm:text-2xl font-black text-white tracking-tight">
                   {job.title}
                 </h2>
-                <p className="text-xs sm:text-sm text-indigo-200 mt-0.5 line-clamp-1">
+                <p className="text-xs sm:text-sm text-slate-300 mt-0.5 line-clamp-1">
                   {job.summary}
                 </p>
               </div>

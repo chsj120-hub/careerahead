@@ -109,49 +109,60 @@ export function App() {
         
         {/* Hero Banner (Shown if no profile or in explore mode) */}
         {!profile && (
-          <div className="relative rounded-3xl bg-gradient-to-r from-indigo-700 via-indigo-600 to-indigo-900 text-white p-5 sm:p-10 shadow-xl overflow-hidden border-4 border-indigo-300/40">
-            <div className="absolute right-0 top-0 w-80 h-80 bg-white/10 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none" />
+          <section 
+            aria-labelledby="hero-heading"
+            className="relative rounded-3xl bg-slate-900 text-white p-6 sm:p-10 shadow-xl overflow-hidden border border-slate-800"
+          >
+            {/* Ambient Lighting */}
+            <div className="absolute right-0 top-0 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl -mr-24 -mt-24 pointer-events-none" aria-hidden="true" />
+            <div className="absolute left-1/3 bottom-0 w-64 h-64 bg-amber-500/10 rounded-full blur-2xl pointer-events-none" aria-hidden="true" />
+
             <div className="max-w-2xl relative z-10 space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400 text-slate-950 font-black text-xs">
-                <Sparkles className="w-3.5 h-3.5" /> 3분 만에 찾는 내 미래 진로 캐릭터
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-400 text-slate-950 font-black text-xs shadow-xs">
+                <Sparkles className="w-3.5 h-3.5 text-slate-950" aria-hidden="true" />
+                <span>3분 만에 찾는 내 미래 진로 캐릭터</span>
               </div>
 
-              <h1 className="text-2xl sm:text-4xl font-black tracking-tight leading-tight">
-                재미있는 게임처럼 찾는<br />
+              <h1 id="hero-heading" className="text-2xl sm:text-4xl font-black tracking-tight leading-tight text-white">
+                재미있는 퀘스트로 찾는<br />
                 <span className="text-amber-300">데이터 기반 현실 진로</span>: 내일찾기
               </h1>
 
-              <p className="text-xs sm:text-base text-indigo-100 leading-relaxed">
-                딱딱한 사전식 정보는 이제 그만! 최고 연봉 전문직부터 지방 거점 고연봉, 과학·수학 미래 테크, 
-                골목 자영업과 재택 프리랜서까지 100개 직업의 진짜 현실을 투명하게 알려드립니다.
+              <p className="text-xs sm:text-base text-slate-300 leading-relaxed font-normal">
+                딱딱한 사전식 정보 대신, 최고 연봉 전문직부터 지방 거점 고연봉, 과학·수학 미래 테크, 
+                골목 자영업과 재택 프리랜서까지 <strong>100개 직업의 진짜 현실</strong>을 투명하게 알려드립니다.
               </p>
 
-              <div className="pt-2 flex flex-wrap items-center gap-2.5 sm:gap-3">
+              {/* Primary & Secondary CTA Buttons */}
+              <div className="pt-2 flex flex-wrap items-center gap-3">
                 <button
+                  type="button"
                   onClick={() => setIsSurveyOpen(true)}
-                  className="flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-amber-400 text-slate-950 font-black text-sm sm:text-base hover:bg-amber-300 transition-all shadow-lg shadow-amber-500/20 active:scale-95 w-full sm:w-auto"
+                  className="flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-sm sm:text-base transition-all shadow-md shadow-amber-400/25 active:scale-95 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-amber-300 w-full sm:w-auto"
                 >
                   <span>나의 성향 캐릭터 8단계 테스트 시작</span>
-                  <ArrowRight className="w-5 h-5" />
+                  <ArrowRight className="w-5 h-5" aria-hidden="true" />
                 </button>
 
                 <button
+                  type="button"
                   onClick={() => setIsQROpen(true)}
-                  className="flex items-center justify-center gap-2 px-4 py-3 rounded-2xl bg-amber-400/20 hover:bg-amber-400/30 text-amber-200 font-bold text-xs sm:text-sm border border-amber-300/40 transition-colors shrink-0"
+                  className="flex items-center justify-center gap-2 px-4 py-3.5 rounded-2xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs sm:text-sm border border-slate-700 transition-colors shrink-0 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-indigo-400"
                 >
-                  <QrCode className="w-4 h-4 text-amber-300" />
+                  <QrCode className="w-4 h-4 text-amber-300" aria-hidden="true" />
                   <span>교사용 학생 접속 QR 📱</span>
                 </button>
 
                 <button
+                  type="button"
                   onClick={() => setCurrentTab('explore')}
-                  className="px-4 py-3 rounded-2xl bg-indigo-800/80 hover:bg-indigo-800 text-white font-bold text-xs sm:text-sm border border-indigo-400/30 transition-colors shrink-0"
+                  className="px-4 py-3.5 rounded-2xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-200 font-bold text-xs sm:text-sm border border-indigo-400/30 transition-colors shrink-0 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-indigo-400"
                 >
-                  100개 직업 대도감 둘러보기
+                  100개 직업 도감 둘러보기
                 </button>
               </div>
             </div>
-          </div>
+          </section>
         )}
 
         {/* TAB 1: RESULT & CHARACTER STAT VIEW */}

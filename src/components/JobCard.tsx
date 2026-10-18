@@ -20,35 +20,46 @@ export const JobCard: React.FC<JobCardProps> = ({
   const getSafetyBadgeColor = (status: Job['aiTrafficLight']['status']) => {
     switch (status) {
       case 'partner':
-        return 'bg-emerald-50 text-emerald-700 border-emerald-300';
+        return 'bg-emerald-50 text-emerald-800 border-emerald-300';
       case 'cooperation':
-        return 'bg-amber-50 text-amber-700 border-amber-300';
+        return 'bg-amber-50 text-amber-900 border-amber-300';
       case 'caution':
-        return 'bg-rose-50 text-rose-700 border-rose-300';
+        return 'bg-rose-50 text-rose-900 border-rose-300';
     }
   };
 
   return (
-    <div 
+    <article 
       onClick={() => onSelect(job)}
-      className="group relative bg-white rounded-3xl p-5 border-2 border-slate-200/90 hover:border-indigo-500 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between cursor-pointer overflow-hidden transform hover:-translate-y-1"
+      tabIndex={0}
+      role="button"
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onSelect(job);
+        }
+      }}
+      aria-label={`${job.title} 직업 상세 정보 보기`}
+      className="group relative bg-white rounded-3xl p-5 border border-slate-200/90 hover:border-indigo-500 shadow-xs hover:shadow-lg transition-all duration-200 flex flex-col justify-between cursor-pointer overflow-hidden transform hover:-translate-y-1 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-indigo-600"
     >
       {/* Top Tag & Pick Button */}
       <div className="flex items-start justify-between gap-2 mb-3">
-        <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
+        <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
           {job.categoryName}
         </span>
 
         <button
+          type="button"
           onClick={(e) => onTogglePick(job, e)}
           title={isPicked ? '찜 취소' : '내 꿈으로 찜하기'}
-          className={`p-2 rounded-xl transition-all ${
+          aria-label={isPicked ? `${job.title} 찜 취소` : `${job.title} 찜하기`}
+          className={`p-2.5 rounded-xl transition-all min-w-[36px] min-h-[36px] flex items-center justify-center focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-rose-400 ${
             isPicked
-              ? 'bg-rose-500 text-white shadow-md shadow-rose-200 scale-105'
+              ? 'bg-rose-500 text-white shadow-sm scale-105'
               : 'bg-slate-100 text-slate-400 hover:text-rose-500 hover:bg-rose-50'
           }`}
         >
-          <Heart className={`w-4 h-4 ${isPicked ? 'fill-white' : ''}`} />
+          <Heart className={`w-4 h-4 ${isPicked ? 'fill-white' : ''}`} aria-hidden="true" />
         </button>
       </div>
 
@@ -113,8 +124,8 @@ export const JobCard: React.FC<JobCardProps> = ({
       {/* Action Footer */}
       <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-indigo-600 group-hover:text-indigo-700">
         <span>미래 전망 & 5대 현실 Q&A 보기</span>
-        <ChevronRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+        <ChevronRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" aria-hidden="true" />
       </div>
-    </div>
+    </article>
   );
 };
