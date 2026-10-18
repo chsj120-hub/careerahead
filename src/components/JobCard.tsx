@@ -1,7 +1,7 @@
-// src/components/JobCard.tsx
 import React from 'react';
 import { Job } from '../types/career';
-import { Footprints, DollarSign, Heart, ChevronRight, ShieldCheck } from 'lucide-react';
+import { Footprints, DollarSign, Heart, ChevronRight, ShieldCheck, Trophy } from 'lucide-react';
+import { getTop10SalaryInfo } from '../data/top10SalaryCalculator';
 
 interface JobCardProps {
   job: Job;
@@ -75,14 +75,20 @@ export const JobCard: React.FC<JobCardProps> = ({
 
       {/* Badges Matrix */}
       <div className="space-y-2 pt-3 border-t border-slate-100 text-xs">
-        {/* Income Spectrum */}
+        {/* Income Spectrum with Top 10% High Ceiling */}
         <div className="flex items-center justify-between text-slate-700 bg-slate-50 px-3 py-1.5 rounded-xl">
           <span className="flex items-center gap-1.5 text-slate-500 font-medium">
             <DollarSign className="w-3.5 h-3.5 text-amber-500" /> 소득 스펙트럼
           </span>
-          <span className="font-bold text-slate-900">
-            {job.moneyTruth.entrySalary}만 ~ {job.moneyTruth.tenYearSalary}만원
-          </span>
+          <div className="flex items-center gap-1.5">
+            <span className="font-bold text-slate-900">
+              {job.moneyTruth.entrySalary}만 ~ {job.moneyTruth.tenYearSalary}만
+            </span>
+            <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-purple-100 text-purple-800 font-black flex items-center gap-0.5" title="상위 10%의 고점">
+              <Trophy className="w-2.5 h-2.5 text-amber-500" />
+              <span>{getTop10SalaryInfo(job).salary.toLocaleString()}만+</span>
+            </span>
+          </div>
         </div>
 
         {/* Future Safety / Outlook Indicator */}

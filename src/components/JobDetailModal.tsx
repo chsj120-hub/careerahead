@@ -1,7 +1,7 @@
-// src/components/JobDetailModal.tsx
 import React, { useState, useEffect } from 'react';
 import { Job } from '../types/career';
 import { getJobWorkforceStat } from '../data/workforceStats';
+import { getTop10SalaryInfo } from '../data/top10SalaryCalculator';
 import { 
   X, 
   DollarSign, 
@@ -17,7 +17,9 @@ import {
   Search,
   BookOpen,
   Building,
-  Users
+  Users,
+  Trophy,
+  Award
 } from 'lucide-react';
 
 interface JobDetailModalProps {
@@ -58,6 +60,9 @@ export const JobDetailModal: React.FC<JobDetailModalProps> = ({
 
   const tenYearDiff = job.moneyTruth.tenYearSalary - AVG_TEN_YEAR_SALARY_2026;
   const tenYearRatio = (job.moneyTruth.tenYearSalary / AVG_TEN_YEAR_SALARY_2026).toFixed(1);
+
+  // 상위 10% 소득 통계 및 직업적 고점 데이터
+  const top10Info = getTop10SalaryInfo(job);
 
   // 현재 한국 등록 직업인 수 (추정치) & 취업자 대비 비율 및 진입 난이도
   const workforce = getJobWorkforceStat(job.id, job.title, job.category);
@@ -192,10 +197,10 @@ export const JobDetailModal: React.FC<JobDetailModalProps> = ({
               </div>
             </div>
 
-            {/* Salary Comparison Big Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+            {/* Salary Comparison 3-Column Cards (초봉, 10년차, 상위 10% 고점) */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 mb-4">
               
-              {/* 초봉 카드 */}
+              {/* ① 초봉 카드 */}
               <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-b from-indigo-50/70 to-white border-2 border-indigo-200/80 shadow-sm flex flex-col justify-between">
                 <div>
                   <div className="flex items-center justify-between text-xs text-indigo-900 font-bold mb-1">
@@ -206,34 +211,33 @@ export const JobDetailModal: React.FC<JobDetailModalProps> = ({
                   </div>
                   
                   {/* Big Number */}
-                  <div className="text-2xl sm:text-3xl font-black text-indigo-700 mt-1">
+                  <div className="text-xl sm:text-2xl font-black text-indigo-700 mt-1">
                     연 {job.moneyTruth.entrySalary.toLocaleString()}만 원
                   </div>
-                  <span className="text-xs text-slate-500 font-medium block mt-0.5">
+                  <span className="text-[11px] text-slate-500 font-medium block mt-0.5">
                     (월 실수령액 약 {Math.round(job.moneyTruth.entrySalary / 12 * 0.88).toLocaleString()}만 원)
                   </span>
                 </div>
 
                 {/* 2026 한국 대졸 신입 평균(3,500만) 비교 배지 */}
                 <div className="mt-3 pt-3 border-t border-indigo-100">
-                  <div className="text-[11px] text-slate-500 flex items-center justify-between mb-1">
-                    <span>2026 대한민국 대졸 신입 평균</span>
-                    <span className="font-bold text-slate-700">연 3,500만 원</span>
+                  <div className="text-[10px] text-slate-500 flex items-center justify-between mb-1">
+                    <span>2026 신입 평균(3,500만)</span>
                   </div>
-                  <div className={`p-2 rounded-xl text-xs font-black flex items-center justify-between ${
+                  <div className={`p-1.5 px-2 rounded-lg text-[11px] font-black flex items-center justify-between ${
                     entryDiff >= 0 
                       ? 'bg-emerald-100 text-emerald-900 border border-emerald-300' 
                       : 'bg-amber-100 text-amber-900 border border-amber-300'
                   }`}>
-                    <span>평균 대비 차이:</span>
-                    <span className="text-sm">
-                      {entryDiff >= 0 ? `+${entryDiff.toLocaleString()}만 원 (${entryRatio}배 🚀)` : `${entryDiff.toLocaleString()}만 원 (초기 수련 🌱)`}
+                    <span>평균 대비:</span>
+                    <span>
+                      {entryDiff >= 0 ? `+${entryDiff.toLocaleString()}만 (${entryRatio}배 🚀)` : `${entryDiff.toLocaleString()}만 (수련 🌱)`}
                     </span>
                   </div>
                 </div>
               </div>
 
-              {/* 10년차 소득 카드 */}
+              {/* ② 10년차 소득 카드 */}
               <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-b from-emerald-50/70 to-white border-2 border-emerald-200/80 shadow-sm flex flex-col justify-between">
                 <div>
                   <div className="flex items-center justify-between text-xs text-emerald-900 font-bold mb-1">
@@ -244,33 +248,99 @@ export const JobDetailModal: React.FC<JobDetailModalProps> = ({
                   </div>
 
                   {/* Big Number */}
-                  <div className="text-2xl sm:text-3xl font-black text-emerald-700 mt-1">
+                  <div className="text-xl sm:text-2xl font-black text-emerald-700 mt-1">
                     연 {job.moneyTruth.tenYearSalary.toLocaleString()}만 원
                   </div>
-                  <span className="text-xs text-slate-500 font-medium block mt-0.5">
+                  <span className="text-[11px] text-slate-500 font-medium block mt-0.5">
                     (월 실수령액 약 {Math.round(job.moneyTruth.tenYearSalary / 12 * 0.82).toLocaleString()}만 원)
                   </span>
                 </div>
 
                 {/* 2026 한국 10년차 평균(5,800만) 비교 배지 */}
                 <div className="mt-3 pt-3 border-t border-emerald-100">
-                  <div className="text-[11px] text-slate-500 flex items-center justify-between mb-1">
-                    <span>2026 대한민국 10년차 직장인 평균</span>
-                    <span className="font-bold text-slate-700">연 5,800만 원</span>
+                  <div className="text-[10px] text-slate-500 flex items-center justify-between mb-1">
+                    <span>2026 10년차 평균(5,800만)</span>
                   </div>
-                  <div className={`p-2 rounded-xl text-xs font-black flex items-center justify-between ${
+                  <div className={`p-1.5 px-2 rounded-lg text-[11px] font-black flex items-center justify-between ${
                     tenYearDiff >= 0 
                       ? 'bg-emerald-100 text-emerald-900 border border-emerald-300' 
                       : 'bg-amber-100 text-amber-900 border border-amber-300'
                   }`}>
-                    <span>평균 대비 차이:</span>
-                    <span className="text-sm">
-                      {tenYearDiff >= 0 ? `+${tenYearDiff.toLocaleString()}만 원 (${tenYearRatio}배 🌟)` : `${tenYearDiff.toLocaleString()}만 원`}
+                    <span>평균 대비:</span>
+                    <span>
+                      {tenYearDiff >= 0 ? `+${tenYearDiff.toLocaleString()}만 (${tenYearRatio}배 🌟)` : `${tenYearDiff.toLocaleString()}만`}
                     </span>
                   </div>
                 </div>
               </div>
 
+              {/* ③ 👑 직업별 상위 10%의 고점 (편견 깨기 하이라이트) */}
+              <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-b from-purple-50/80 via-white to-amber-50/40 border-2 border-purple-300 shadow-md flex flex-col justify-between relative overflow-hidden ring-1 ring-purple-200">
+                <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-amber-300/30 to-purple-400/20 rounded-bl-full pointer-events-none" />
+                
+                <div>
+                  <div className="flex items-center justify-between text-xs text-purple-950 font-bold mb-1">
+                    <span className="flex items-center gap-1">
+                      <Trophy className="w-3.5 h-3.5 text-amber-500" />
+                      <span>상위 10%의 고점</span>
+                    </span>
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-purple-200/80 text-purple-900 font-black">
+                      TOP 10%
+                    </span>
+                  </div>
+
+                  {/* Big Number */}
+                  <div className="text-xl sm:text-2xl font-black text-purple-800 mt-1 flex items-baseline gap-1">
+                    <span>연 {top10Info.salary.toLocaleString()}만 원</span>
+                    <span className="text-xs text-purple-600 font-extrabold">이상</span>
+                  </div>
+                  <span className="text-[11px] text-purple-700 font-bold block mt-0.5">
+                    (초봉의 {top10Info.ratioVsEntry}배 · 10년차의 {top10Info.ratioVsTenYear}배 도약 🚀)
+                  </span>
+                </div>
+
+                {/* 상위 10% 등급 배지 & 전국 10% 기준선 비교 */}
+                <div className="mt-3 pt-3 border-t border-purple-100">
+                  <div className="text-[10px] text-purple-900 flex items-center justify-between mb-1 font-semibold">
+                    <span>{top10Info.levelBadge}</span>
+                  </div>
+                  <div className="p-1.5 px-2 rounded-lg text-[11px] font-black bg-gradient-to-r from-purple-100 to-amber-100 text-purple-950 border border-purple-200 flex items-center justify-between">
+                    <span>전국 상위 10%(1.1억) 대비:</span>
+                    <span>
+                      {top10Info.diffVsNationalAvg >= 0 
+                        ? `+${top10Info.diffVsNationalAvg.toLocaleString()}만 👑` 
+                        : `${top10Info.diffVsNationalAvg.toLocaleString()}만`}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            {/* 🌟 직업에 대한 편견을 깨는 상위 10% 멘토링 가이드 카드 */}
+            <div className="p-4 rounded-2xl bg-gradient-to-r from-purple-50/90 via-indigo-50/70 to-pink-50/60 border-2 border-purple-200 shadow-sm mb-4">
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 rounded-xl bg-purple-600 text-white flex items-center justify-center shrink-0 shadow-sm mt-0.5">
+                  <Award className="w-4 h-4" />
+                </div>
+                <div className="space-y-1.5 text-xs">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="font-black text-purple-950 text-sm">
+                      💡 직업의 고점 탐색: &quot;어떤 직업이든 상위 10%의 고수가 되면 세상이 달라집니다!&quot;
+                    </span>
+                    <span className="text-[10px] px-2 py-0.2 rounded-full bg-purple-200 text-purple-800 font-bold">
+                      직업 편견 타파
+                    </span>
+                  </div>
+                  <p className="text-slate-700 leading-relaxed">
+                    <strong className="text-indigo-900 font-bold">🎯 상위 10% 도약의 비결: </strong>
+                    {top10Info.howToReach}
+                  </p>
+                  <p className="text-purple-900 font-medium bg-white/70 p-2.5 rounded-xl border border-purple-100 leading-relaxed">
+                    🌈 <strong>선생님의 응원 한마디:</strong> {top10Info.encouragement}
+                  </p>
+                </div>
+              </div>
             </div>
 
             {/* 성과급 & 리스크 */}

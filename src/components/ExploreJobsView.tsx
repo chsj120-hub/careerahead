@@ -5,6 +5,8 @@ import { CATEGORIES_INFO } from '../data/jobsData';
 import { JobCard } from './JobCard';
 import { Search, SlidersHorizontal, PlusCircle, AlertCircle } from 'lucide-react';
 
+import { getTop10SalaryInfo } from '../data/top10SalaryCalculator';
+
 interface ExploreJobsViewProps {
   jobs: Job[];
   pickedJobIds: string[];
@@ -35,7 +37,7 @@ export const ExploreJobsView: React.FC<ExploreJobsViewProps> = ({
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [sortBy, setSortBy] = useState<'default' | 'entrySalary' | 'tenYearSalary' | 'prepTime'>('default');
+  const [sortBy, setSortBy] = useState<'default' | 'top10Salary' | 'tenYearSalary' | 'entrySalary' | 'prepTime'>('default');
 
   // 필터링 및 정렬
   const filteredJobs = useMemo(() => {
@@ -63,10 +65,12 @@ export const ExploreJobsView: React.FC<ExploreJobsViewProps> = ({
         const priorityB = CATEGORY_PRIORITY[b.category] ?? 99;
         return priorityA - priorityB;
       });
-    } else if (sortBy === 'entrySalary') {
-      result.sort((a, b) => b.moneyTruth.entrySalary - a.moneyTruth.entrySalary);
+    } else if (sortBy === 'top10Salary') {
+      result.sort((a, b) => getTop10SalaryInfo(b).salary - getTop10SalaryInfo(a).salary);
     } else if (sortBy === 'tenYearSalary') {
       result.sort((a, b) => b.moneyTruth.tenYearSalary - a.moneyTruth.tenYearSalary);
+    } else if (sortBy === 'entrySalary') {
+      result.sort((a, b) => b.moneyTruth.entrySalary - a.moneyTruth.entrySalary);
     } else if (sortBy === 'prepTime') {
       result.sort((a, b) => a.prepPeriod.yearsRequired - b.prepPeriod.yearsRequired);
     }
@@ -131,6 +135,7 @@ export const ExploreJobsView: React.FC<ExploreJobsViewProps> = ({
               className="w-full sm:w-auto py-3 px-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs sm:text-sm font-bold text-slate-700 focus:outline-none focus:border-indigo-500"
             >
               <option value="default">기본 추천순 (친근한 순)</option>
+              <option value="top10Salary">👑 상위 10% 고점 높은순</option>
               <option value="tenYearSalary">10년차 소득 높은순</option>
               <option value="entrySalary">초임 높은순</option>
               <option value="prepTime">준비기간 짧은순</option>

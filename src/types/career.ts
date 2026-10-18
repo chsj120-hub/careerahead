@@ -32,10 +32,12 @@ export interface Job {
   };
   // 5대 현실 Q&A 템플릿
   moneyTruth: {
-    entrySalary: number;    // 만원 (초임 연봉 또는 초기 순익)
-    tenYearSalary: number;  // 만원 (10년차 연봉 또는 안정기 순익)
-    peakBonus: string;      // 성과급/최대 수입폭
-    risk: string;           // 현실적인 리스크 & 고충
+    entrySalary: number;        // 만원 (초임 연봉 또는 초기 순익)
+    tenYearSalary: number;      // 만원 (10년차 연봉 또는 안정기 순익)
+    top10PercentSalary?: number;// 만원 (상위 10% 베테랑/탑티어 평균 연봉)
+    top10Desc?: string;         // 상위 10% 도달 비결 및 직업적 고점 안내
+    peakBonus: string;          // 성과급/최대 수입폭
+    risk: string;               // 현실적인 리스크 & 고충
   };
   prepPeriod: {
     minAge: number;
