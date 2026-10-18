@@ -15,7 +15,7 @@ import { ExploreJobsView } from './components/ExploreJobsView';
 import { UnregisteredJobModal } from './components/UnregisteredJobModal';
 import { QRCodeModal } from './components/QRCodeModal';
 
-import { Sparkles, Compass, ArrowRight, QrCode, Database } from 'lucide-react';
+import { Sparkles, Compass, ArrowRight, QrCode, Database, Search, User } from 'lucide-react';
 
 export function App() {
   // App Navigation & Modals
@@ -304,6 +304,54 @@ export function App() {
         isOpen={isQROpen}
         onClose={() => setIsQROpen(false)}
       />
+
+      {/* 📱 Mobile Fixed Bottom Navigation Bar (한 손 엄지손가락 내비게이션 지원) */}
+      <nav 
+        aria-label="모바일 하단 내비게이션"
+        className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 px-4 py-2 flex items-center justify-around shadow-lg"
+      >
+        {/* 1. 직업 도감 */}
+        <button
+          type="button"
+          onClick={() => setCurrentTab('explore')}
+          className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition-colors ${
+            currentTab === 'explore'
+              ? 'text-indigo-600 font-extrabold'
+              : 'text-slate-500 hover:text-slate-800 font-medium'
+          }`}
+        >
+          <Search className="w-5 h-5" aria-hidden="true" />
+          <span className="text-[11px]">직업 도감</span>
+        </button>
+
+        {/* 2. 성향 테스트 CTA 플로팅 버튼 */}
+        <button
+          type="button"
+          onClick={() => setIsSurveyOpen(true)}
+          className="flex flex-col items-center gap-1 -mt-5 bg-gradient-to-tr from-amber-400 to-amber-500 text-slate-950 font-black p-2.5 rounded-full shadow-lg shadow-amber-400/30 border-4 border-white active:scale-95 transition-transform"
+          aria-label="8단계 진로 퀘스트 테스트 시작"
+        >
+          <Sparkles className="w-5 h-5 text-slate-950" aria-hidden="true" />
+          <span className="text-[10px] font-black px-1">퀘스트</span>
+        </button>
+
+        {/* 3. 내 캐릭터/결과 */}
+        <button
+          type="button"
+          onClick={() => {
+            if (profile) setCurrentTab('result');
+            else setIsSurveyOpen(true);
+          }}
+          className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition-colors ${
+            currentTab === 'result'
+              ? 'text-indigo-600 font-extrabold'
+              : 'text-slate-500 hover:text-slate-800 font-medium'
+          }`}
+        >
+          <User className="w-5 h-5" aria-hidden="true" />
+          <span className="text-[11px]">{profile ? '내 캐릭터' : '결과 보기'}</span>
+        </button>
+      </nav>
 
     </div>
   );

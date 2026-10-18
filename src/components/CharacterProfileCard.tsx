@@ -124,22 +124,24 @@ export const CharacterProfileCard: React.FC<CharacterProfileCardProps> = ({
 
       {/* Picked Dream Jobs Quick Bar */}
       {pickedJobs.length > 0 && (
-        <div className="mt-5 p-3.5 rounded-2xl bg-indigo-950/80 border border-amber-400/40 flex flex-wrap items-center justify-between gap-3">
+        <div className="mt-5 p-4 rounded-2xl bg-indigo-950/80 border border-amber-400/40 flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2">
-            <span className="text-amber-400 text-base">⭐</span>
+            <Heart className="w-4 h-4 text-rose-400 fill-rose-400" aria-hidden="true" />
             <span className="text-xs sm:text-sm font-bold text-amber-200">
-              내가 찜한 꿈의 직업 (Pick):
+              내가 찜한 꿈의 직업 ({pickedJobs.length}개):
             </span>
           </div>
           <div className="flex flex-wrap gap-2">
             {pickedJobs.map(job => (
               <button
                 key={job.id}
+                type="button"
                 onClick={() => onSelectJob(job)}
-                className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-amber-400 text-slate-950 font-extrabold text-xs hover:bg-amber-300 transition-colors shadow-sm"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-400 text-slate-950 font-black text-xs hover:bg-amber-300 transition-transform active:scale-95 shadow-xs focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-amber-300"
               >
-                <span>{job.icon}</span>
+                <span aria-hidden="true">{job.icon}</span>
                 <span>{job.title}</span>
+                <Heart className="w-3 h-3 fill-rose-600 text-rose-600" aria-hidden="true" />
               </button>
             ))}
           </div>

@@ -19,7 +19,7 @@ export default {
         }
       },
       fontFamily: {
-        sans: ['"Pretendard"', 'sans-serif', 'system-ui'],
+        sans: ['"SUITE"', '"SUIT"', '"Pretendard"', 'sans-serif', 'system-ui'],
       },
       boxShadow: {
         'game-card': '0 8px 24px -4px rgba(79, 70, 229, 0.12), 0 4px 8px -2px rgba(0, 0, 0, 0.05)',

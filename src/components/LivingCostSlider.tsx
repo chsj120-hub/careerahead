@@ -19,10 +19,10 @@ export const LivingCostSlider: React.FC<LivingCostSliderProps> = ({
       <div className="absolute top-0 right-0 w-48 h-48 bg-amber-100/60 rounded-full blur-3xl -mr-12 -mt-12 pointer-events-none" />
 
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 relative z-10">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 relative z-10">
         <div>
           <div className="flex items-center gap-2">
-            <span className="p-2 rounded-xl bg-amber-400 text-slate-950 font-bold text-sm shadow-sm flex items-center gap-1">
+            <span className="p-2 rounded-xl bg-amber-400 text-slate-950 font-bold text-sm shadow-xs flex items-center gap-1">
               <Coins className="w-4 h-4" /> 체감 경제 & 주거 격차 시뮬레이터
             </span>
             <span className="text-xs px-2.5 py-0.5 rounded-full bg-indigo-100 text-indigo-700 font-bold">
@@ -43,6 +43,35 @@ export const LivingCostSlider: React.FC<LivingCostSliderProps> = ({
           <p className="text-xl sm:text-2xl font-black text-indigo-700">
             월 약 {costData.monthlyNetSalary.toLocaleString()}만 원
           </p>
+        </div>
+      </div>
+
+      {/* 🎯 [간결함 & 명확성] 학생 눈높이 2대 핵심 결론 요약 카드 */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6 relative z-10">
+        <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-300 flex items-center gap-3.5">
+          <div className="w-11 h-11 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-xl shrink-0 shadow-xs">
+            💰
+          </div>
+          <div>
+            <span className="text-xs font-bold text-emerald-900 block">지방에서 일할 때 매달 더 모으는 돈</span>
+            <p className="text-lg sm:text-xl font-black text-emerald-700">
+              월 +{(costData.province.disposable - costData.seoul.disposable).toLocaleString()}만 원 더 저축!
+            </p>
+            <span className="text-[11px] text-emerald-800/80">월세와 물가 절약으로 1년에 약 {((costData.province.disposable - costData.seoul.disposable) * 12).toLocaleString()}만 원 추가 축적</span>
+          </div>
+        </div>
+
+        <div className="p-4 rounded-2xl bg-indigo-50 border border-indigo-300 flex items-center gap-3.5">
+          <div className="w-11 h-11 rounded-xl bg-indigo-600 text-white flex items-center justify-center text-xl shrink-0 shadow-xs">
+            🏡
+          </div>
+          <div>
+            <span className="text-xs font-bold text-indigo-900 block">30평 내 집 마련 시간 단축</span>
+            <p className="text-lg sm:text-xl font-black text-indigo-700">
+              {costData.housingBenchmark.yearsSaved}년 더 빠르게 내 집 마련!
+            </p>
+            <span className="text-[11px] text-indigo-800/80">서울 30평(11.5억) vs 지방 거점(3.8억)으로 주거 안정성 월등</span>
+          </div>
         </div>
       </div>
 

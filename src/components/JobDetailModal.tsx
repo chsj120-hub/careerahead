@@ -182,11 +182,45 @@ export const JobDetailModal: React.FC<JobDetailModalProps> = ({
           </div>
         </div>
 
+        {/* 🚀 Quick Jump Navigation Bar (시각적 계층 및 빠른 탐색 지원) */}
+        <div className="bg-slate-100/90 border-b border-slate-200 px-3 sm:px-6 py-2 flex items-center gap-1.5 sm:gap-2 overflow-x-auto scrollbar-none text-xs">
+          <a
+            href="#section-salary"
+            className="px-2.5 py-1 rounded-lg bg-white hover:bg-indigo-50 hover:text-indigo-700 text-slate-700 font-bold border border-slate-200 whitespace-nowrap transition-colors"
+          >
+            💰 소득·고점
+          </a>
+          <a
+            href="#section-prep"
+            className="px-2.5 py-1 rounded-lg bg-white hover:bg-indigo-50 hover:text-indigo-700 text-slate-700 font-bold border border-slate-200 whitespace-nowrap transition-colors"
+          >
+            ⏱️ 준비·종사자수
+          </a>
+          <a
+            href="#section-location"
+            className="px-2.5 py-1 rounded-lg bg-white hover:bg-indigo-50 hover:text-indigo-700 text-slate-700 font-bold border border-slate-200 whitespace-nowrap transition-colors"
+          >
+            📍 근무지
+          </a>
+          <a
+            href="#section-future"
+            className="px-2.5 py-1 rounded-lg bg-white hover:bg-indigo-50 hover:text-indigo-700 text-slate-700 font-bold border border-slate-200 whitespace-nowrap transition-colors"
+          >
+            🚦 미래전망 3대수치
+          </a>
+          <a
+            href="#section-action"
+            className="px-2.5 py-1 rounded-lg bg-amber-100 hover:bg-amber-200 text-amber-900 font-black border border-amber-300 whitespace-nowrap transition-colors"
+          >
+            🎒 학생 실천 가이드
+          </a>
+        </div>
+
         {/* Modal Scrollable Body: 5대 Q&A 템플릿 */}
-        <div className="p-4 sm:p-7 overflow-y-auto space-y-4 sm:space-y-6 flex-1 bg-slate-50/50">
+        <div className="p-4 sm:p-7 overflow-y-auto space-y-4 sm:space-y-6 flex-1 bg-slate-50/50 scroll-smooth">
           
           {/* ① 💰 어른들이 말하는 돈의 진실 (2026 대한민국 평균 연봉 실시간 비교 인포그래픽) */}
-          <div className="bg-white rounded-2xl p-5 sm:p-6 border-2 border-indigo-100 shadow-sm">
+          <div id="section-salary" className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-sm scroll-mt-4">
             <div className="flex items-center gap-2 mb-4 text-slate-900">
               <span className="p-2 rounded-xl bg-amber-100 text-amber-800 font-bold">
                 <DollarSign className="w-6 h-6" />
@@ -368,7 +402,7 @@ export const JobDetailModal: React.FC<JobDetailModalProps> = ({
           </div>
 
           {/* ② ⏱️ 준비 기간 및 시작 가능 나이 + 👥 우리나라에서 이 직업을 가진 사람은 몇 명이나 될까? */}
-          <div className="bg-white rounded-2xl p-5 sm:p-6 border-2 border-indigo-100 shadow-sm space-y-4">
+          <div id="section-prep" className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-sm space-y-4 scroll-mt-4">
             <div className="flex items-center gap-2 text-slate-900">
               <span className="p-2 rounded-xl bg-blue-100 text-blue-800 font-bold">
                 <Clock className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -556,7 +590,7 @@ export const JobDetailModal: React.FC<JobDetailModalProps> = ({
           </div>
 
           {/* ③ 📍 지역 현실성 */}
-          <div className="bg-white rounded-2xl p-5 border-2 border-indigo-100 shadow-sm">
+          <div id="section-location" className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm scroll-mt-4">
             <div className="flex items-center gap-2 mb-3 text-slate-900">
               <span className="p-2 rounded-xl bg-emerald-100 text-emerald-800 font-bold">
                 <MapPin className="w-5 h-5" />
@@ -598,7 +632,7 @@ export const JobDetailModal: React.FC<JobDetailModalProps> = ({
           </div>
 
           {/* ④ 🌐 미래 유망 3대 수치 각각 신호등 제공 (글자 크기 확대 & 또렷한 인포그래픽) */}
-          <div className="bg-white rounded-2xl p-5 sm:p-6 border-2 border-indigo-200 shadow-sm">
+          <div id="section-future" className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-sm scroll-mt-4">
             <div className="flex items-center gap-2 mb-4 text-slate-900">
               <span className="p-2 rounded-xl bg-purple-100 text-purple-800 font-bold">
                 <ShieldCheck className="w-6 h-6" />
@@ -617,7 +651,7 @@ export const JobDetailModal: React.FC<JobDetailModalProps> = ({
             <div className="space-y-3.5">
               
               {/* 1. 저출산 & 고령화 신호등 */}
-              <div className="p-4 rounded-2xl bg-rose-50/70 border-2 border-rose-200">
+              <div className="p-4 rounded-2xl bg-rose-50/70 border border-rose-200">
                 <div className="flex flex-wrap items-center justify-between gap-2 mb-1.5">
                   <div className="flex items-center gap-2">
                     <span className="text-base">👶</span>
@@ -639,7 +673,7 @@ export const JobDetailModal: React.FC<JobDetailModalProps> = ({
               </div>
 
               {/* 2. AI & 디지털 자동화 신호등 */}
-              <div className="p-4 rounded-2xl bg-blue-50/70 border-2 border-blue-200">
+              <div className="p-4 rounded-2xl bg-blue-50/70 border border-blue-200">
                 <div className="flex flex-wrap items-center justify-between gap-2 mb-1.5">
                   <div className="flex items-center gap-2">
                     <span className="text-base">🤖</span>
@@ -661,7 +695,7 @@ export const JobDetailModal: React.FC<JobDetailModalProps> = ({
               </div>
 
               {/* 3. 기후변화 & 친환경 신호등 */}
-              <div className="p-4 rounded-2xl bg-emerald-50/70 border-2 border-emerald-200">
+              <div className="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-200">
                 <div className="flex flex-wrap items-center justify-between gap-2 mb-1.5">
                   <div className="flex items-center gap-2">
                     <span className="text-base">🌍</span>
@@ -686,7 +720,7 @@ export const JobDetailModal: React.FC<JobDetailModalProps> = ({
           </div>
 
           {/* ⑤ 🎒 지금 초·중학생 때의 액션 플랜 */}
-          <div className="bg-gradient-to-br from-indigo-50 to-white rounded-2xl p-5 border-2 border-indigo-200 shadow-sm">
+          <div id="section-action" className="bg-gradient-to-br from-indigo-50 to-white rounded-2xl p-5 border border-indigo-200 shadow-sm scroll-mt-4">
             <div className="flex items-center gap-2 mb-4 text-slate-900">
               <span className="p-2 rounded-xl bg-indigo-600 text-white font-bold shadow-sm">
                 <Backpack className="w-5 h-5" />
