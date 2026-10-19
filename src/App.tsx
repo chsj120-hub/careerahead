@@ -347,7 +347,7 @@ export function App() {
                   <h2 className="text-lg sm:text-xl font-extrabold text-slate-900 flex items-center gap-2">
                     <span>{profile.title}님을 위한 맞춤 추천 직업</span>
                     <span className="text-xs px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800 font-bold">
-                      Top 8 Matching
+                      Best Matching
                     </span>
                   </h2>
                   <p className="text-xs text-slate-500 mt-0.5">
@@ -379,10 +379,10 @@ export function App() {
               </div>
               <div className="max-w-xl mx-auto space-y-1.5">
                 <h3 id="explore-more-heading" className="text-lg sm:text-xl font-black text-slate-900 tracking-tight">
-                  추천된 8개 직업 중에 마음에 쏙 드는 직업이 없으신가요?
+                  추천된 직업 중에 마음에 쏙 드는 직업이 없으신가요?
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                  괜찮아요! 세상에는 8개 추천 직업 외에도 흥미진진한 일들이 무궁무진합니다.<br className="hidden sm:inline" />
+                  괜찮아요! 세상에는 현재 추천된 직업 외에도 흥미진진한 일들이 무궁무진합니다.<br className="hidden sm:inline" />
                   <strong>100개 직업 전체 도감</strong>에서 키워드 검색, 연봉, 워라밸, 미래 유망도를 자유롭게 둘러보며 나만의 꿈을 찾아 찜해보세요!
                 </p>
               </div>
