@@ -388,14 +388,27 @@ export const ShareableResultCard: React.FC<ShareableResultCardProps> = ({
                   </span>
                 </div>
 
-                {/* 3. 미래 유망도 */}
+                {/* 3. 미래 유망도 (신호등 상태 + 핵심 설명 문구) */}
                 <div className="p-2 rounded-xl bg-slate-50 border border-slate-200 shadow-2xs flex flex-col justify-center">
                   <span className="text-[9px] text-slate-500 font-bold mb-0.5 flex items-center gap-1">
                     🚀 미래 유망도
                   </span>
-                  <span className="text-[11px] sm:text-xs font-bold text-emerald-700 leading-tight">
-                    {primaryJob.aiTrafficLight.statusText.split(' ')[0]}
-                  </span>
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    <span className={`text-[11px] sm:text-xs font-black leading-tight ${
+                      primaryJob.aiTrafficLight.statusText.includes('🔴')
+                        ? 'text-rose-600'
+                        : primaryJob.aiTrafficLight.statusText.includes('🟡')
+                          ? 'text-amber-600'
+                          : 'text-emerald-700'
+                    }`}>
+                      {primaryJob.aiTrafficLight.statusText}
+                    </span>
+                  </div>
+                  {primaryJob.aiTrafficLight.reason && (
+                    <p className="text-[8.5px] text-slate-500 font-medium leading-tight mt-0.5 break-keep line-clamp-1" title={primaryJob.aiTrafficLight.reason}>
+                      {primaryJob.aiTrafficLight.reason}
+                    </p>
+                  )}
                 </div>
 
                 {/* 4. 내가 찜한 꿈의 직업 1 (아이콘 + 직업 이름만 심플하게 표시) */}
