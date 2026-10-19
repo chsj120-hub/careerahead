@@ -2,14 +2,11 @@ import React, { useRef, useState, useEffect, useMemo } from 'react';
 import { CharacterProfile, Job, HexagonStats } from '../types/career';
 import { toPng, toBlob } from 'html-to-image';
 import QRCode from 'qrcode';
-import { HexagonRadarChart } from './HexagonRadarChart';
+import { ChibiCharacter } from './ChibiCharacter';
 import { 
   Download, 
   X, 
   Sparkles, 
-  DollarSign, 
-  Bot, 
-  Footprints, 
   Heart,
   Copy,
   ImageIcon,
@@ -130,7 +127,7 @@ export const ShareableResultCard: React.FC<ShareableResultCardProps> = ({
         cacheBust: true,
         quality: 0.98,
         pixelRatio: 2,
-        backgroundColor: '#090D16',
+        backgroundColor: '#FFFFFF',
         width: targetWidth,
         height: targetHeight,
         style: {
@@ -169,7 +166,7 @@ export const ShareableResultCard: React.FC<ShareableResultCardProps> = ({
         cacheBust: true,
         quality: 0.98,
         pixelRatio: 2,
-        backgroundColor: '#090D16',
+        backgroundColor: '#FFFFFF',
         width: targetWidth,
         height: targetHeight,
         style: {
@@ -314,71 +311,69 @@ export const ShareableResultCard: React.FC<ShareableResultCardProps> = ({
         {/* Scrollable View Area (Containing the Exportable Card) */}
         <div className="p-3 sm:p-4 overflow-y-auto flex-1 flex justify-center bg-slate-950">
           
-          {/* THE 1-PAGE EXPORTABLE CARD CONTAINER */}
+          {/* THE 1-PAGE EXPORTABLE CARD CONTAINER (모던 클린 화이트 테마 & 2D 2등신 캐릭터 탑재) */}
           <div
             ref={cardRef}
-            className="w-full max-w-md bg-gradient-to-b from-indigo-950 via-slate-900 to-slate-950 text-white rounded-3xl p-5 sm:p-6 pb-8 sm:pb-10 border-4 border-amber-400/80 shadow-2xl relative overflow-visible"
+            className="w-full max-w-md bg-white text-slate-900 rounded-3xl p-5 sm:p-6 pb-8 sm:pb-10 border-4 border-indigo-400 shadow-2xl relative overflow-visible"
           >
             {/* Watermark / Brand Header */}
-            <div className="flex items-center justify-between pb-3 border-b border-indigo-700/60 mb-3">
+            <div className="flex items-center justify-between pb-2.5 border-b border-slate-200 mb-3">
               <div className="flex items-center gap-2">
-                <span className="font-black text-sm tracking-tight text-white flex items-center gap-1.5">
+                <span className="font-black text-sm tracking-tight text-slate-900 flex items-center gap-1.5">
                   <span className="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
                   내일찾기 CareerPath
                 </span>
-                <span className="text-[9px] px-1.5 py-0.5 rounded bg-indigo-800 text-indigo-200 font-mono">
+                <span className="text-[9px] px-1.5 py-0.5 rounded bg-indigo-50 text-indigo-700 font-mono font-bold border border-indigo-200">
                   2026 V5
                 </span>
               </div>
-              <span className="text-[10px] text-amber-300 font-bold">
+              <span className="text-[10px] text-indigo-600 font-bold">
                 공공 진로 데이터 공식 연계
               </span>
             </div>
 
-            {/* 1. Character Identity Title & Avatar */}
-            <div className="text-center py-1">
-              <div className="w-18 h-18 mx-auto rounded-2xl bg-gradient-to-tr from-indigo-600 to-amber-400 p-0.5 shadow-xl shadow-indigo-950 mb-2">
-                <div className="w-full h-full bg-slate-900 rounded-[14px] flex items-center justify-center text-4xl">
-                  <span>{profile.avatar}</span>
-                </div>
-              </div>
-
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-400 text-slate-950 font-black text-xs mb-1.5 shadow">
+            {/* 1. Character Identity Title */}
+            <div className="text-center py-0.5">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 border border-amber-300 text-amber-950 font-black text-xs mb-1.5 shadow-2xs">
                 <span>진로 탐험가</span>
-                <span className="font-mono text-[11px] bg-slate-950/20 px-1.5 py-0.2 rounded">
+                <span className="font-mono text-[11px] bg-white px-1.5 py-0.2 rounded border border-amber-300">
                   {profile.code}
                 </span>
               </div>
 
-              <h2 className="text-lg sm:text-xl font-black text-white tracking-tight">
+              <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight leading-snug">
                 {cleanTitle}
               </h2>
 
-              <p className="text-xs text-indigo-200 mt-1 px-2 leading-relaxed line-clamp-2">
+              <p className="text-xs text-slate-600 mt-1 px-2 leading-relaxed">
                 {profile.description}
               </p>
             </div>
 
-            {/* 2. 육각형 6대 능력치 레이더 차트 (카드 내 포함) */}
-            <div className="my-3 p-3 rounded-2xl bg-slate-900/80 border border-indigo-700/50 flex flex-col items-center">
-              <span className="text-[11px] font-extrabold text-amber-300 mb-1 flex items-center gap-1">
-                📊 나의 육각형 성향 능력치
-              </span>
-              <HexagonRadarChart
-                stats={hexagonStats}
-                theme="indigo"
-                size={220}
+            {/* 2. 2D 2등신 사람 캐릭터 일러스트 (육각형 차트 대신 배치!) */}
+            <div className="my-3 py-3 px-4 rounded-2xl bg-gradient-to-b from-indigo-50/70 via-slate-50 to-indigo-50/50 border border-indigo-100 flex flex-col items-center justify-center relative overflow-hidden">
+              <div className="flex items-center gap-1 text-[11px] font-extrabold text-indigo-800 mb-1">
+                <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+                <span>나의 2D 진로 캐릭터</span>
+              </div>
+              <ChibiCharacter
+                title={cleanTitle}
+                code={profile.code}
+                size={135}
               />
+              <div className="mt-1 px-3 py-0.5 rounded-full bg-amber-400 text-slate-950 font-black text-[11px] shadow-xs">
+                핵심: {profile.highlightStats}
+              </div>
             </div>
 
-            {/* 3. My Picked Dream Jobs */}
-            <div className="mt-2.5 p-3 rounded-2xl bg-indigo-900/60 border border-indigo-500/40">
-              <div className="flex items-center justify-between text-xs text-amber-300 font-bold mb-1.5">
-                <span className="flex items-center gap-1">
-                  <Heart className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+            {/* 3. My Picked Dream Jobs (연봉 표시 제외, 깔끔한 직업 분류 뱃지 적용) */}
+            <div className="mt-2.5 p-3 rounded-2xl bg-slate-50 border border-slate-200">
+              <div className="flex items-center justify-between text-xs text-slate-900 font-bold mb-1.5">
+                <span className="flex items-center gap-1 font-black">
+                  <Heart className="w-3.5 h-3.5 fill-rose-500 text-rose-500" />
                   내가 찜한 꿈의 직업 (Dream Pick)
                 </span>
-                <span className="text-[10px] text-indigo-300">
+                <span className="text-[10px] text-slate-500 font-medium">
                   {pickedJobs.length > 0 ? `${pickedJobs.length}개 선택` : '맞춤 추천'}
                 </span>
               </div>
@@ -386,100 +381,104 @@ export const ShareableResultCard: React.FC<ShareableResultCardProps> = ({
               <div className="space-y-1.5">
                 {pickedJobs.length > 0 ? (
                   pickedJobs.slice(0, 2).map((job) => (
-                    <div key={job.id} className="flex items-center justify-between p-2 rounded-xl bg-slate-900/80 border border-slate-700">
+                    <div key={job.id} className="flex items-center justify-between p-2 rounded-xl bg-white border border-slate-200 shadow-2xs">
                       <div className="flex items-center gap-2">
-                        <span className="text-base">{job.icon}</span>
+                        <span className="text-xl">{job.icon}</span>
                         <div>
-                          <span className="font-bold text-xs text-white">{job.title}</span>
-                          <span className="text-[10px] text-indigo-300 block truncate max-w-[130px] sm:max-w-[170px]">
+                          <span className="font-extrabold text-xs text-slate-900 block">{job.title}</span>
+                          <span className="text-[10px] text-slate-500 block truncate max-w-[170px]">
                             {job.summary}
                           </span>
                         </div>
                       </div>
-                      <span className="text-xs font-black text-amber-400 shrink-0">
-                        연 {job.moneyTruth.entrySalary.toLocaleString()}만~
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-700 border border-indigo-200 shrink-0">
+                        {job.categoryName}
                       </span>
                     </div>
                   ))
                 ) : (
-                  <div className="flex items-center justify-between p-2 rounded-xl bg-slate-900/80 border border-slate-700">
+                  <div className="flex items-center justify-between p-2 rounded-xl bg-white border border-slate-200 shadow-2xs">
                     <div className="flex items-center gap-2">
-                      <span className="text-base">{primaryJob?.icon}</span>
+                      <span className="text-xl">{primaryJob?.icon}</span>
                       <div>
-                        <span className="font-bold text-xs text-white">{primaryJob?.title}</span>
-                        <span className="text-[10px] text-indigo-300 block truncate max-w-[130px] sm:max-w-[170px]">
+                        <span className="font-extrabold text-xs text-slate-900 block">{primaryJob?.title}</span>
+                        <span className="text-[10px] text-slate-500 block truncate max-w-[170px]">
                           {primaryJob?.summary}
                         </span>
                       </div>
                     </div>
-                    <span className="text-xs font-black text-amber-400 shrink-0">
-                      연 {primaryJob?.moneyTruth.entrySalary.toLocaleString()}만~
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-700 border border-indigo-200 shrink-0">
+                      {primaryJob?.categoryName}
                     </span>
                   </div>
                 )}
               </div>
             </div>
 
-            {/* 4. Primary Job Mini Infographic Badges */}
+            {/* 4. Primary Job Mini Infographic Badges (초임 연봉 대신 희소성 뱃지와 칭호/분류로 대체 & 박스 핏 최적화) */}
             {primaryJob && (
               <div className="mt-2.5 grid grid-cols-3 gap-1.5 text-center">
-                <div className="p-1.5 rounded-xl bg-slate-900/70 border border-slate-700">
-                  <div className="flex items-center justify-center gap-1 text-[9px] text-indigo-300 mb-0.5">
-                    <DollarSign className="w-3 h-3 text-amber-400" /> 초임 연봉
-                  </div>
-                  <span className="font-black text-amber-300 text-[11px] block">
-                    {primaryJob.moneyTruth.entrySalary.toLocaleString()}만
+                {/* 1. 희소성 뱃지 */}
+                <div className="p-2 rounded-xl bg-slate-50 border border-slate-200 flex flex-col items-center justify-center">
+                  <span className="text-[9px] text-slate-500 font-bold mb-0.5 flex items-center gap-0.5">
+                    🏆 희소성 뱃지
+                  </span>
+                  <span className="font-extrabold text-indigo-700 text-[11px] block truncate w-full px-1">
+                    {primaryJob.badge}
                   </span>
                 </div>
 
-                <div className="p-1.5 rounded-xl bg-slate-900/70 border border-slate-700">
-                  <div className="flex items-center justify-center gap-1 text-[9px] text-indigo-300 mb-0.5">
-                    <Bot className="w-3 h-3" /> 미래 유망도
-                  </div>
-                  <span className="font-bold text-white text-[10px] block truncate">
+                {/* 2. 직업 분류 / 칭호 */}
+                <div className="p-2 rounded-xl bg-slate-50 border border-slate-200 flex flex-col items-center justify-center">
+                  <span className="text-[9px] text-slate-500 font-bold mb-0.5 flex items-center gap-0.5">
+                    🏷️ 직업 분류
+                  </span>
+                  <span className="font-bold text-slate-800 text-[11px] block truncate w-full px-1">
+                    {primaryJob.categoryName}
+                  </span>
+                </div>
+
+                {/* 3. 미래 유망도 */}
+                <div className="p-2 rounded-xl bg-slate-50 border border-slate-200 flex flex-col items-center justify-center">
+                  <span className="text-[9px] text-slate-500 font-bold mb-0.5 flex items-center gap-0.5">
+                    🚀 미래 유망도
+                  </span>
+                  <span className="font-bold text-emerald-700 text-[11px] block truncate w-full px-1">
                     {primaryJob.aiTrafficLight.statusText.split(' ')[0]}
-                  </span>
-                </div>
-
-                <div className="p-1.5 rounded-xl bg-slate-900/70 border border-slate-700">
-                  <div className="flex items-center justify-center gap-1 text-[9px] text-indigo-300 mb-0.5">
-                    <Footprints className="w-3 h-3 text-amber-400" /> 준비 걸음
-                  </div>
-                  <span className="font-bold text-white text-[10px] block truncate">
-                    {primaryJob.prepPeriod.stepBadge.split('(')[0]}
                   </span>
                 </div>
               </div>
             )}
 
-            {/* 5. 친구 초대 및 바로가기 QR 코드 배너 (공유 시 즉시 접속 유도) */}
-            <div className="mt-3 p-2.5 rounded-2xl bg-gradient-to-r from-indigo-900/90 via-slate-900 to-indigo-900/90 border border-indigo-500/50 flex items-center justify-between gap-2.5">
+            {/* 5. 친구 초대 및 바로가기 QR 코드 배너 (화이트 톤) */}
+            <div className="mt-3 p-2.5 rounded-2xl bg-gradient-to-r from-indigo-50 to-amber-50/60 border border-indigo-200 flex items-center justify-between gap-2.5">
               <div className="text-left flex-1 min-w-0">
-                <span className="text-[11px] font-black text-amber-300 flex items-center gap-1">
+                <span className="text-[11px] font-black text-indigo-900 flex items-center gap-1">
                   👉 내 진로 카드 바로 열기
                 </span>
-                <p className="text-[9px] text-indigo-200 mt-0.5 leading-tight">
+                <p className="text-[9px] text-slate-600 mt-0.5 leading-tight">
                   QR을 비추거나 공유 링크를 누르면 이 카드가 바로 열립니다!
                 </p>
-                <span className="text-[8px] text-slate-400 font-mono mt-0.5 block truncate">
+                <span className="text-[8px] text-indigo-600 font-mono mt-0.5 block truncate">
                   🔗 {typeof window !== 'undefined' ? window.location.origin : '내일찾기'}
                 </span>
               </div>
 
               {miniQrUrl && (
-                <div className="bg-white p-1 rounded-xl shadow-lg border border-white/40 shrink-0">
+                <div className="bg-white p-1 rounded-xl shadow-xs border border-slate-200 shrink-0">
                   <img src={miniQrUrl} alt="내일찾기 QR" className="w-11 h-11 object-contain" />
                 </div>
               )}
             </div>
 
             {/* 6. Footer */}
-            <div className="mt-2.5 pt-2 border-t border-indigo-800/60 text-center">
+            <div className="mt-2.5 pt-2 border-t border-slate-200 text-center">
               <p className="text-[8px] text-slate-400">
                 © 2026 내일찾기 (CareerPath Finder) · 한국고용정보원 데이터 기반
               </p>
             </div>
           </div>
+
 
         </div>
 
