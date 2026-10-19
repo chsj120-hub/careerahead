@@ -117,15 +117,29 @@ export const ShareableResultCard: React.FC<ShareableResultCardProps> = ({
   };
 
   // 1. 고화질 이미지 PNG 파일 다운로드
+  // 1. 고화질 이미지 PNG 파일 다운로드 (하단 잘림 방지 완벽 처리)
   const handleDownloadImage = async () => {
     if (!cardRef.current) return;
     setIsExporting(true);
     try {
-      const dataUrl = await toPng(cardRef.current, {
+      const node = cardRef.current;
+      const targetWidth = node.offsetWidth || 420;
+      const targetHeight = node.scrollHeight + 32;
+
+      const dataUrl = await toPng(node, {
         cacheBust: true,
         quality: 0.98,
         pixelRatio: 2,
-        backgroundColor: '#090D16'
+        backgroundColor: '#090D16',
+        width: targetWidth,
+        height: targetHeight,
+        style: {
+          transform: 'none',
+          margin: '0',
+          maxHeight: 'none',
+          overflow: 'visible',
+          paddingBottom: '36px'
+        }
       });
       const link = document.createElement('a');
       link.download = `내일찾기_진로카드_${profile.code}.png`;
@@ -140,18 +154,31 @@ export const ShareableResultCard: React.FC<ShareableResultCardProps> = ({
     }
   };
 
-  // 2. 카카오톡에 바로 붙여넣기 (클립보드에 이미지 파일 직접 복사!)
+  // 2. 카카오톡에 바로 붙여넣기 (클립보드에 이미지 파일 직접 복사, 하단 잘림 방지)
   const handleCopyImageToClipboard = async () => {
     if (!cardRef.current) return;
     setIsExporting(true);
 
     try {
+      const node = cardRef.current;
+      const targetWidth = node.offsetWidth || 420;
+      const targetHeight = node.scrollHeight + 32;
+
       // 이미지 Blob 생성
-      const blob = await toBlob(cardRef.current, {
+      const blob = await toBlob(node, {
         cacheBust: true,
         quality: 0.98,
         pixelRatio: 2,
-        backgroundColor: '#090D16'
+        backgroundColor: '#090D16',
+        width: targetWidth,
+        height: targetHeight,
+        style: {
+          transform: 'none',
+          margin: '0',
+          maxHeight: 'none',
+          overflow: 'visible',
+          paddingBottom: '36px'
+        }
       });
 
       if (!blob) throw new Error('Blob creation failed');
@@ -290,7 +317,7 @@ export const ShareableResultCard: React.FC<ShareableResultCardProps> = ({
           {/* THE 1-PAGE EXPORTABLE CARD CONTAINER */}
           <div
             ref={cardRef}
-            className="w-full max-w-md bg-gradient-to-b from-indigo-950 via-slate-900 to-slate-950 text-white rounded-3xl p-5 sm:p-6 border-4 border-amber-400/80 shadow-2xl relative overflow-hidden"
+            className="w-full max-w-md bg-gradient-to-b from-indigo-950 via-slate-900 to-slate-950 text-white rounded-3xl p-5 sm:p-6 pb-8 sm:pb-10 border-4 border-amber-400/80 shadow-2xl relative overflow-visible"
           >
             {/* Watermark / Brand Header */}
             <div className="flex items-center justify-between pb-3 border-b border-indigo-700/60 mb-3">
