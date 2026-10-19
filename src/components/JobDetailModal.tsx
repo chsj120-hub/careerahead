@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Job } from '../types/career';
 import { getJobWorkforceStat } from '../data/workforceStats';
 import { getTop10SalaryInfo } from '../data/top10SalaryCalculator';
+import { getFreeToolLink } from '../utils/freeToolLinks';
 import { 
   X, 
   DollarSign, 
@@ -117,6 +118,7 @@ export const JobDetailModal: React.FC<JobDetailModalProps> = ({
   const careerNetSearchUrl = `https://www.career.go.kr/cnet/front/web/search/searchList.do?searchWord=${encodeURIComponent(job.title)}`;
   const worknetSearchUrl = `https://www.work.go.kr/consltJobCarpa/srch/jobInfoSrch/srchJobInfo.do?keyword=${encodeURIComponent(job.title)}`;
   const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(job.title + ' 직업 진로 연봉 자격증')}`;
+  const freeToolLink = getFreeToolLink(job.actionPlanForYouth?.freeTool);
 
   return (
     <div 
@@ -417,17 +419,23 @@ export const JobDetailModal: React.FC<JobDetailModalProps> = ({
               </div>
             </div>
 
-            {/* 준비 단계 & 최소 시작 나이 카드 */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div className="p-3.5 sm:p-4 rounded-xl bg-indigo-50/70 border border-indigo-200 flex items-center justify-between">
-                <span className="text-xs sm:text-sm font-semibold text-indigo-900">필요 준비 단계 (걸음):</span>
-                <span className="px-3 py-1.5 rounded-full bg-indigo-600 text-white font-extrabold text-xs sm:text-sm shadow-sm">
+            {/* 준비 단계 & 최소 시작 나이 카드 (2/3 vs 1/3 반응형 비율 및 한 줄 완벽 표기) */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              {/* 왼쪽: 필요 준비 단계 (2/3 영역) */}
+              <div className="md:col-span-2 p-3.5 sm:p-4 rounded-xl bg-indigo-50/70 border border-indigo-200 flex items-center justify-between gap-2 overflow-hidden">
+                <span className="text-xs sm:text-sm font-bold text-indigo-950 whitespace-nowrap shrink-0">
+                  필요 준비 단계(걸음):
+                </span>
+                <span className="px-3 py-1.5 rounded-full bg-indigo-600 text-white font-extrabold text-xs sm:text-sm shadow-sm whitespace-nowrap text-right">
                   {job.prepPeriod.stepBadge}
                 </span>
               </div>
-              <div className="p-3.5 sm:p-4 rounded-xl bg-sky-50/70 border border-sky-200 flex items-center justify-between">
-                <span className="text-xs sm:text-sm font-semibold text-sky-900">최소 시작 가능 연령:</span>
-                <span className="px-3 py-1.5 rounded-full bg-sky-600 text-white font-extrabold text-xs sm:text-sm shadow-sm">
+              {/* 오른쪽: 최소 시작 가능 연령 (1/3 영역) */}
+              <div className="md:col-span-1 p-3.5 sm:p-4 rounded-xl bg-sky-50/70 border border-sky-200 flex items-center justify-between gap-2 overflow-hidden">
+                <span className="text-xs sm:text-sm font-bold text-sky-950 whitespace-nowrap shrink-0">
+                  시작 가능 연령:
+                </span>
+                <span className="px-3 py-1.5 rounded-full bg-sky-600 text-white font-extrabold text-xs sm:text-sm shadow-sm whitespace-nowrap text-right shrink-0">
                   만 {job.prepPeriod.minAge}세부터
                 </span>
               </div>
@@ -752,14 +760,45 @@ export const JobDetailModal: React.FC<JobDetailModalProps> = ({
                 </div>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-white border border-indigo-100 shadow-sm flex items-start gap-3">
-                <span className="text-xl">💻</span>
-                <div>
-                  <h4 className="font-bold text-xs sm:text-sm text-indigo-700 flex items-center gap-1.5">
-                    오늘 바로 해보는 무료 툴 & 체험
-                    <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-                  </h4>
-                  <p className="text-xs sm:text-sm text-slate-600 mt-0.5">{job.actionPlanForYouth.freeTool}</p>
+              <div className="p-3.5 sm:p-4 rounded-xl bg-gradient-to-r from-indigo-50/70 to-white border border-indigo-200/90 shadow-xs flex items-start gap-3">
+                <span className="text-xl shrink-0 mt-0.5">💻</span>
+                <div className="flex-1 min-w-0 space-y-1.5">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <h4 className="font-bold text-xs sm:text-sm text-indigo-700 flex items-center gap-1.5">
+                      오늘 바로 해보는 무료 툴 & 체험
+                      <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+                    </h4>
+                    {freeToolLink && (
+                      <a
+                        href={freeToolLink.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white text-[11px] sm:text-xs font-bold shadow-xs hover:shadow-sm transition-all cursor-pointer whitespace-nowrap group shrink-0"
+                        title={`${freeToolLink.label} 공식 사이트 바로가기 (새 창)`}
+                      >
+                        <span>🔗 바로 체험해보기</span>
+                        <ExternalLink className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+                      </a>
+                    )}
+                  </div>
+                  <div className="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                    {freeToolLink ? (
+                      <div className="flex flex-wrap items-center gap-1.5">
+                        <span>{job.actionPlanForYouth.freeTool}</span>
+                        <a
+                          href={freeToolLink.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-0.5 text-indigo-600 hover:text-indigo-800 underline font-extrabold"
+                        >
+                          <span>[{freeToolLink.buttonText}]</span>
+                          <ExternalLink className="w-2.5 h-2.5" />
+                        </a>
+                      </div>
+                    ) : (
+                      <span>{job.actionPlanForYouth.freeTool}</span>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
