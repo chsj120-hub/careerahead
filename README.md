@@ -10,15 +10,16 @@
 ```
 src/
 ├── components/
-│   ├── Header.tsx                 # 상단 헤더, 브랜드 로고, QR 코드 및 탭 내비게이션
+│   ├── Header.tsx                 # 상단 헤더, 브랜드 로고(원클릭 초기화), QR 코드 및 탭 내비게이션
 │   ├── SurveyStepModal.tsx        # 8단계 성향 퀘스트 모달 (임시저장 및 이어하기 지원)
-│   ├── CharacterProfileCard.tsx   # RPG 캐릭터 스탯 카드 (Lv, 코드, 칭호, 5대 스탯, 찜한 직업)
+│   ├── CharacterProfileCard.tsx   # RPG 캐릭터 스탯 카드 (Lv, 코드, 칭호, 6대 육각형 역량 차트, 2D Chibi 캐릭터)
+│   ├── ChibiCharacter.tsx         # 7대 성향별 2D 2등신 Chibi 사람 캐릭터 고화질 SVG 벡터 일러스트
 │   ├── JobCard.tsx                # 직업 도감 카드 (태그, 연봉, AI 신호등, 찜하기 버튼)
 │   ├── JobDetailModal.tsx         # 5대 현실 Q&A 팩트시트 모달 (초봉/10년차/상위10%, 인구/AI/기후 신호등, 청소년 액션플랜)
 │   ├── LivingCostSlider.tsx       # 서울 vs 지방 주거 & 체감 생활비 비교 시뮬레이터 (슬라이더 반응형)
-│   ├── ShareableResultCard.tsx    # 모바일 1장 공유 카드 생성 및 이미지(PNG) 다운로드 (html-to-image)
+│   ├── ShareableResultCard.tsx    # 모바일 1장 2열 모던 화이트 공유 카드 생성 및 이미지(PNG) 다운로드 (html-to-image)
 │   ├── ExploreJobsView.tsx        # 110개 직업 검색 & 카테고리/정렬 필터링 도감
-│   ├── UnregisteredJobModal.tsx   # 미등록 직업 조사 요청 피드백 루프 (LocalStorage 누적)
+│   ├── UnregisteredJobModal.tsx   # 미등록 직업 조사 요청 피드백 루프 (LocalStorage 누적 및 서버리스 메일 전송)
 │   └── QRCodeModal.tsx            # 교사용 수업 프로젝터용 학생 모바일 접속 QR 생성기
 ├── data/
 │   ├── jobsData.ts                # 110개 엄선 직업 데이터베이스 (9개 카테고리)
@@ -129,8 +130,10 @@ npm run preview
 
 ---
 
-## 📚 8. 프로그램 사용 안내서 및 초등학교 수업 자료
+## 📚 8. 프로그램 사용 안내서 및 초등학교 수업 자료, 공모전 제안서
 
+* **공모전 종합 제안서 (Competition Proposal)**: **[`PROJECT_PROPOSAL.md`](file:///c:/Users/User/Desktop/careerahead/PROJECT_PROPOSAL.md)**  
+  공모전 심사용 공식 기획서: 제안 배경 및 필요성, 4대 정밀 데이터 엔진 및 기술 차별성, 2D Chibi 캐릭터 및 6각 차트, Vercel 서버리스 피드백 루프, No-PII 보안 컴플라이언스, 2차시 수업 연계 효과 및 중장기 로드맵 총망라
 * **공식 사용 안내서**: **[`USER_GUIDE.md`](file:///c:/Users/User/Desktop/careerahead/USER_GUIDE.md)**  
   교사용 접속 QR 띄우기, 8단계 퀘스트 가이드, 6대 육각형 능력치 해석, 5대 테마 전환, 카카오톡 이미지 바로 붙여넣기 기능 완벽 수록
 * **초등 진로 수업 지도안 & 활동지 세트**: **[`LESSON_PLAN.md`](file:///c:/Users/User/Desktop/careerahead/LESSON_PLAN.md)**  
