@@ -75,13 +75,25 @@ export interface Job {
   careerNetCode?: string;
 }
 
+export interface HexagonStats {
+  creativity: number;     // 1. 창의·표현 (1~5점 또는 20~100점)
+  logic: number;          // 2. 논리·탐구
+  communication: number;  // 3. 대인·소통
+  grit: number;           // 4. 끈기·실행
+  tech: number;           // 5. 첨단·테크
+  leadership: number;     // 6. 도전·리더십
+}
+
+export type ResultThemeKey = 'indigo' | 'white' | 'emerald' | 'sunset' | 'violet';
+
 export interface CharacterProfile {
   code: string;           // 예: [L-T-R]
   title: string;          // 예: 초정밀 알고리즘 개척자 (또는 학생 직접 입력 칭호)
   avatar: string;         // 이모지
   description: string;
-  level: number;
+  level?: number;         // 레벨 미표시를 위해 옵셔널 처리
   highlightStats: string;
+  stats?: HexagonStats;   // 육각형 능력치
   recommendedJobs: Job[]; // 4~8개 엄선
 }
 

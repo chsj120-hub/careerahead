@@ -18,10 +18,62 @@ import { QRCodeModal } from './components/QRCodeModal';
 import { Sparkles, Compass, ArrowRight, QrCode, Database, Search, User } from 'lucide-react';
 
 export function App() {
+  // URL 딥링크 공유 파라미터 파싱
+  const getSharedProfileFromUrl = (): CharacterProfile | null => {
+    if (typeof window === 'undefined') return null;
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('share') === '1') {
+        const code = urlParams.get('code') || '[T-L-O]';
+        const title = urlParams.get('title') || '미래를 여는 탐험가';
+        const avatar = urlParams.get('avatar') || '🌟';
+        const c = Number(urlParams.get('c')) || 85;
+        const l = Number(urlParams.get('l')) || 88;
+        const e = Number(urlParams.get('e')) || 82;
+        const g = Number(urlParams.get('g')) || 90;
+        const t = Number(urlParams.get('t')) || 86;
+        const lead = Number(urlParams.get('lead')) || 84;
+
+        return {
+          code,
+          title,
+          avatar,
+          description: '친구로부터 공유받은 진로 성향 리포트 카드입니다.',
+          highlightStats: '육각형 성향 능력치',
+          stats: {
+            creativity: c,
+            logic: l,
+            communication: e,
+            grit: g,
+            tech: t,
+            leadership: lead
+          },
+          recommendedJobs: JOBS_DATABASE.slice(0, 6)
+        };
+      }
+    } catch {
+      // silent
+    }
+    return null;
+  };
+
   // App Navigation & Modals
-  const [currentTab, setCurrentTab] = useState<'survey' | 'explore' | 'result'>('explore');
+  const [currentTab, setCurrentTab] = useState<'survey' | 'explore' | 'result'>(() => {
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('share') === '1') return 'result';
+    }
+    return 'explore';
+  });
+
   const [isSurveyOpen, setIsSurveyOpen] = useState<boolean>(false);
-  const [isShareModalOpen, setIsShareModalOpen] = useState<boolean>(false);
+  const [isShareModalOpen, setIsShareModalOpen] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('share') === '1') return true;
+    }
+    return false;
+  });
   const [isUnregisteredOpen, setIsUnregisteredOpen] = useState<boolean>(false);
   const [isQROpen, setIsQROpen] = useState<boolean>(false);
   const [unregisteredKeyword, setUnregisteredKeyword] = useState<string>('');
@@ -31,6 +83,8 @@ export function App() {
 
   // User State
   const [profile, setProfile] = useState<CharacterProfile | null>(() => {
+    const shared = getSharedProfileFromUrl();
+    if (shared) return shared;
     try {
       const saved = localStorage.getItem('career_user_profile');
       return saved ? JSON.parse(saved) : null;
@@ -209,7 +263,7 @@ export function App() {
           </div>
         )}
 
-        {/* TAB 2: EXPLORE ALL 50 JOBS VIEW */}
+        {/* TAB 2: EXPLORE ALL 110 JOBS VIEW */}
         {(currentTab === 'explore' || (!profile && currentTab === 'result')) && (
           <div className="space-y-8">
             

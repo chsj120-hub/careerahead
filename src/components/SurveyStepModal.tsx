@@ -395,13 +395,13 @@ export const SurveyStepModal: React.FC<SurveyStepModalProps> = ({
                 className="w-full px-4 py-2.5 rounded-xl bg-white border border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400 text-xs sm:text-sm font-bold text-slate-900"
               />
               <p className="text-[11px] text-amber-800 mt-1 font-medium">
-                💡 직접 입력하시면 아래 예시 대신 이 칭호가 내 RPG 결과 카드에 멋지게 각인됩니다!
+                💡 직접 입력하시면 아래 예시 대신 이 칭호가 내 진로 프로필 카드에 멋지게 반영됩니다!
               </p>
             </div>
           )}
 
-          {/* Options Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {/* Options Grid: 5단계 척도(6, 7단계)는 세로 1열 계단식 배열로 시인성 극대화 */}
+          <div className={currentConfig.step === 6 || currentConfig.step === 7 ? "grid grid-cols-1 gap-2.5" : "grid grid-cols-1 sm:grid-cols-2 gap-3"}>
             {currentConfig.options.map(opt => {
               const selected = isSelected(opt.id);
               return (

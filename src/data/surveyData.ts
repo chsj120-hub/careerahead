@@ -169,65 +169,93 @@ export const SURVEY_STEPS: SurveyStepConfig[] = [
       { id: 'mastery_craft', title: '🌟 한 분야의 대체 불가능한 최고 장인 되기', subtitle: '남들이 쉽게 흉내 낼 수 없는 나만의 독보적인 기술로 인정받을래요!', icon: '👑', tag: '독보적 장인' },
     ]
   },
-  // 6단계: 기계·도구·기술을 대하는 나의 태도 (범용적 기술 친화도)
+  // 6단계: [5단계 선택형] AI & 최신 기술 활용 적극성 (육각형 능력치: 첨단·테크)
   {
     step: 6,
     category: '기술',
-    title: 'Q6. 최신 기계나 디지털 도구를 다룰 때 나의 스타일은?',
-    subtitle: '기술을 대하는 나의 편안한 자세를 골라보세요.',
+    title: 'Q6. [능력치 측정 1] AI와 최신 디지털 도구를 배우고 활용하는 나의 수준과 흥미는?',
+    subtitle: '평소 나의 기술 활용 스타일과 가장 가까운 단계를 1~5단계 중에서 골라보세요.',
     isMultiSelect: false,
     options: [
       { 
-        id: 'early_adopter', 
-        title: '⚡ 새로운 기기나 앱이 나오면 남보다 먼저 써보는 얼리어답터!', 
-        subtitle: '새로운 전자기기, 최신 소프트웨어, 신기한 도구를 만져보는 게 너무 재미있어요.', 
+        id: 'tech_lv1', 
+        title: '1단계: 기본 일상 사용 (메신저 & 검색)', 
+        subtitle: '스마트폰 검색과 연락 위주로 사용하며, 복잡한 기계나 새로운 프로그램은 조금 낯설어요.', 
+        icon: '📱', 
+        tag: '1단계 (기초)' 
+      },
+      { 
+        id: 'tech_lv2', 
+        title: '2단계: 무난한 따라하기 (안내 보고 사용)', 
+        subtitle: '자주 쓰는 앱이나 간단한 프로그램은 설명서나 친구를 보고 차근차근 잘 따라 해요.', 
+        icon: '💻', 
+        tag: '2단계 (보통)' 
+      },
+      { 
+        id: 'tech_lv3', 
+        title: '3단계: 빠른 디지털 습득 (혼자서 척척)', 
+        subtitle: '새로운 앱이나 필요한 소프트웨어가 생기면 혼자서도 금방 익혀 유용하게 써먹어요.', 
+        icon: '⚡', 
+        tag: '3단계 (능숙)' 
+      },
+      { 
+        id: 'tech_lv4', 
+        title: '4단계: 적극적 AI 탐구 (얼리어답터)', 
+        subtitle: '생성형 AI나 새로운 전자기기가 출시되면 바로 호기심을 갖고 이것저것 직접 실험해봐요.', 
+        icon: '🤖', 
+        tag: '4단계 (숙련)' 
+      },
+      { 
+        id: 'tech_lv5', 
+        title: '5단계: 마스터 & 기술 선도 (자유자재 응용)', 
+        subtitle: 'AI 프롬프트, 코딩, 최첨단 기술을 자유자재로 응용하고 다른 사람에게도 비법을 전수해요!', 
         icon: '🚀', 
-        tag: '얼리어답터' 
-      },
-      { 
-        id: 'human_centered', 
-        title: '🤝 기계 화면보다는 사람과 직접 만나 이야기 나누는 인간 친화파!', 
-        subtitle: '도구는 도구일 뿐! 사람의 마음을 어루만지고 눈을 마주치는 소통이 훨씬 중요해요.', 
-        icon: '💖', 
-        tag: '사람 중심' 
-      },
-      { 
-        id: 'physical_maker', 
-        title: '🛠️ 가상 세계보다 진짜 손으로 만지고 몸으로 움직이는 실전 행동파!', 
-        subtitle: '모니터만 쳐다보는 건 답답해요. 직접 물건을 만들거나 현장에서 뛰는 게 진짜예요.', 
-        icon: '🧱', 
-        tag: '손맛 실전' 
+        tag: '5단계 (최고)' 
       },
     ]
   },
-  // 7단계: 리스크 감수 성향 (유머러스하고 친숙한 말투)
+  // 7단계: [5단계 선택형] 새로운 도전 & 주도적 문제 해결 (육각형 능력치: 도전·주도)
   {
     step: 7,
     category: '리스크',
-    title: 'Q7. 돈과 직업에 대한 나의 모험 성향은?',
-    subtitle: '실패의 위험과 보상에 대해 솔직한 내 마음을 골라보세요.',
+    title: 'Q7. [능력치 측정 2] 새로운 목표나 낯선 문제에 부딪혔을 때 나의 도전과 주도성은?',
+    subtitle: '내가 과제를 해결할 때의 적극성과 가장 가까운 단계를 1~5단계 중에서 골라보세요.',
     isMultiSelect: false,
     options: [
       { 
-        id: 'all_in_boom', 
-        title: '🔥 "인생은 한방이지! 100억 벌거나 쫄딱 망하거나 난 끝까지 간다!"', 
-        subtitle: '실패가 두렵지 않아요. 크게 성공해서 대박을 터뜨리는 도전이 제일 짜릿해요! (대박 모험형)', 
-        icon: '🎰', 
-        tag: '인생은 한방' 
-      },
-      { 
-        id: 'safety_first', 
-        title: '🛡️ "안전제일! 망하면 큰일 나요. 작아도 매달 꼬박꼬박 나오는 안전빵이 최고!"', 
-        subtitle: '절대 무리하지 않아요. 안정적인 월급과 정년이 확실하게 보장되는 평화가 좋아요! (철밥통 안정형)', 
-        icon: '🏰', 
-        tag: '안전제일' 
-      },
-      { 
-        id: 'license_shield', 
-        title: '📜 "평생 굶어 죽지 않는 나만의 전문 면허증 하나 딱 따놓을래!"', 
-        subtitle: '시험이 조금 어렵더라도, 국가 자격증 하나 있으면 어디서든 독립적으로 살 수 있어요! (면허 방패형)', 
+        id: 'lead_lv1', 
+        title: '1단계: 안정적 규칙 준수 (신중·안전)', 
+        subtitle: '정해진 지침과 원칙을 따르며, 무리한 변화보다는 안전하고 예측 가능한 일상이 좋아요.', 
         icon: '🛡️', 
-        tag: '면허 방패' 
+        tag: '1단계 (안정)' 
+      },
+      { 
+        id: 'lead_lv2', 
+        title: '2단계: 조용한 조력 지원 (팀 서포트)', 
+        subtitle: '앞장서기보다는 다른 사람의 계획을 뒤에서 묵묵히 돕고 협력하는 역할이 편해요.', 
+        icon: '🤝', 
+        tag: '2단계 (조력)' 
+      },
+      { 
+        id: 'lead_lv3', 
+        title: '3단계: 유연한 상황 대처 (기회 포착)', 
+        subtitle: '평소에는 신중하지만, 꼭 필요한 기회나 상황이 오면 용기를 내어 새로운 도전을 해요.', 
+        icon: '🌱', 
+        tag: '3단계 (유연)' 
+      },
+      { 
+        id: 'lead_lv4', 
+        title: '4단계: 적극적 목표 돌파 (주도적 실행)', 
+        subtitle: '어려운 문제나 목표가 생기면 회피하지 않고 먼저 앞장서서 해결책을 찾고 실행해요.', 
+        icon: '🔥', 
+        tag: '4단계 (돌파)' 
+      },
+      { 
+        id: 'lead_lv5', 
+        title: '5단계: 선구적 개척 리더 (미래 개척자)', 
+        subtitle: '아무도 안 가본 길이라도 스스로 전략을 세워 사람들을 이끌고 끝까지 성취해내요!', 
+        icon: '👑', 
+        tag: '5단계 (개척)' 
       },
     ]
   },
@@ -235,18 +263,18 @@ export const SURVEY_STEPS: SurveyStepConfig[] = [
   {
     step: 8,
     category: '칭호',
-    title: 'Q8. [최종 각성] 내 캐릭터 카드에 달고 싶은 멋진 칭호는?',
+    title: 'Q8. [최종 각성] 내 진로 프로필에 달고 싶은 멋진 칭호는?',
     subtitle: '마음에 드는 추천 칭호를 콕 누르거나, 아래 입력창에 내가 원하는 칭호를 직접 적어보세요!',
     isMultiSelect: false,
     isCustomInputAllowed: true,
-    customPlaceholder: '내가 원하는 나만의 칭호 직접 쓰기 (예: 방구석 코딩 괴물, 우주를 구할 과학자 등)',
+    customPlaceholder: '내가 원하는 나만의 칭호 직접 쓰기 (예: 미래를 바꿀 AI 공학자, 감성 공간 디자이너 등)',
     options: [
-      { id: 'title_future_tech', title: '🚀 [Lv.99] 미래를 개척하는 첨단 테크 혁신가', subtitle: '양자, AI, 우주를 연구하며 세상을 바꿀 미래 기술의 마스터', icon: '🪐', tag: '테크 혁신' },
-      { id: 'title_master_creator', title: '✨ [Lv.99] 수많은 팬을 사로잡는 마스터 크리에이터', subtitle: '스토리, 음악, 그림, 영상으로 사람들의 심장을 울리는 천재 창작자', icon: '🎭', tag: '창작 예술' },
-      { id: 'title_billionaire', title: '💰 [Lv.99] 100억 신화를 쓰는 젊은 백만장자', subtitle: '남다른 사업 감각과 투자로 경제적 자유를 조기에 이뤄낸 부자', icon: '💵', tag: '영앤리치' },
-      { id: 'title_supreme_specialist', title: '👑 [Lv.99] 타의 추종을 불허하는 절대 권위자', subtitle: '의학, 법률, 특허, 금융에서 사람과 사회를 이끄는 최고 전문직', icon: '🏛️', tag: '절대 권위' },
-      { id: 'title_industry_titan', title: '⚓ [Lv.99] 대양과 국가 경제를 지탱하는 거인', subtitle: '거대한 배와 플랜트, 에너지를 호령하는 든든한 산업의 기둥', icon: '🔱', tag: '산업 거인' },
-      { id: 'title_cozy_master', title: '☕ [Lv.99] 사람들에게 쉼을 선물하는 힐링 마스터', subtitle: '나만의 공간과 따뜻한 온기로 단골들에게 행복을 선물하는 장인', icon: '🍰', tag: '동네 힐러' },
+      { id: 'title_future_tech', title: '🚀 미래를 개척하는 첨단 테크 혁신가', subtitle: '양자, AI, 우주를 연구하며 세상을 바꿀 미래 기술의 마스터', icon: '🪐', tag: '테크 혁신' },
+      { id: 'title_master_creator', title: '✨ 수많은 팬을 사로잡는 마스터 크리에이터', subtitle: '스토리, 음악, 그림, 영상으로 사람들의 심장을 울리는 천재 창작자', icon: '🎭', tag: '창작 예술' },
+      { id: 'title_billionaire', title: '💰 100억 신화를 쓰는 젊은 백만장자', subtitle: '남다른 사업 감각과 투자로 경제적 자유를 조기에 이뤄낸 부자', icon: '💵', tag: '영앤리치' },
+      { id: 'title_supreme_specialist', title: '👑 타의 추종을 불허하는 절대 권위자', subtitle: '의학, 법률, 특허, 금융에서 사람과 사회를 이끄는 최고 전문직', icon: '🏛️', tag: '절대 권위' },
+      { id: 'title_industry_titan', title: '⚓ 대양과 국가 경제를 지탱하는 거인', subtitle: '거대한 배와 플랜트, 에너지를 호령하는 든든한 산업의 기둥', icon: '🔱', tag: '산업 거인' },
+      { id: 'title_cozy_master', title: '☕ 사람들에게 쉼을 선물하는 힐링 마스터', subtitle: '나만의 공간과 따뜻한 온기로 단골들에게 행복을 선물하는 장인', icon: '🍰', tag: '동네 힐러' },
     ]
   }
 ];
@@ -263,9 +291,9 @@ export function generateCharacterProfile8(answers: SurveyState8): CharacterProfi
 
   // 대표 칭호 및 아바타 결정 (학생 직접 입력 칭호 최우선 반영!)
   let title = '미래를 여는 지혜로운 탐험가';
-  let avatar = '🧙‍♂️';
+  let avatar = '🌟';
   let description = '다양한 역량을 균형 있게 갖추고 자신만의 길을 개척하는 잠재력 가득한 탐험가입니다.';
-  let highlightStats = '창의력 95 / 논리력 94';
+  let highlightStats = '균형 잡힌 육각형 역량';
 
   // 사용자가 칭호를 직접 입력했거나 선택한 경우
   if (answers.q8_dreamTitle && answers.q8_dreamTitle.trim()) {
@@ -275,42 +303,43 @@ export function generateCharacterProfile8(answers: SurveyState8): CharacterProfi
       title = '미래를 개척하는 첨단 테크 혁신가';
       avatar = '🧑‍💻';
       description = '수학과 양자, AI의 첨단 경계를 허물며 미래 문명을 설계하는 영리한 두뇌입니다.';
-      highlightStats = '논리력 99 / 테크 센스 100';
+      highlightStats = '논리·탐구 / 첨단·테크 우수';
     } else if (raw === 'title_master_creator') {
       title = '수많은 팬을 사로잡는 마스터 크리에이터';
       avatar = '✨';
       description = '스토리와 음악, 비주얼로 전 세계 사람들의 마음을 움직이는 독창적 창작자입니다.';
-      highlightStats = '창의력 99 / 감각 센스 96';
+      highlightStats = '창의·표현 / 감각 센스 우수';
     } else if (raw === 'title_billionaire') {
       title = '100억 신화를 쓰는 젊은 백만장자';
       avatar = '💰';
       description = '기회를 포착하는 동물적인 비즈니스 감각으로 경제적 자유를 거머쥐는 승부사입니다.';
-      highlightStats = '추진력 99 / 리스크 감수 98';
+      highlightStats = '도전·주도 / 끈기·실행 우수';
     } else if (raw === 'title_supreme_specialist') {
       title = '타의 추종을 불허하는 절대 권위자';
       avatar = '👑';
       description = '법과 의학, 특허와 금융에서 정밀한 판단으로 사람과 사회를 이끄는 최고 전문직입니다.';
-      highlightStats = '논리력 98 / 전문성 100';
+      highlightStats = '논리·탐구 / 대인·소통 우수';
     } else if (raw === 'title_industry_titan') {
       title = '대양과 국가 경제를 지탱하는 산업의 거인';
       avatar = '⚓';
       description = '에너지, 플랜트, 거대한 항만과 제조업 현장을 호령하는 강인한 리더입니다.';
-      highlightStats = '끈기력 100 / 실행력 98';
+      highlightStats = '끈기·실행 / 도전·주도 우수';
     } else if (raw === 'title_cozy_master') {
       title = '사람들에게 쉼을 선물하는 힐링 마스터';
       avatar = '☕';
       description = '나만의 따뜻한 공간과 섬세한 손길로 사람들에게 위로와 미소를 전하는 연출가입니다.';
-      highlightStats = '공감력 98 / 손맛 센스 96';
+      highlightStats = '대인·소통 / 창의·표현 우수';
     } else {
-      // 학생이 직접 키보드로 입력한 나만의 맞춤 칭호!
-      title = raw.startsWith('[') ? raw : `[Lv.99] ${raw}`;
+      // 학생이 직접 키보드로 입력한 나만의 맞춤 칭호! (Lv.99, Lv.1 등 접두사 제거)
+      const cleaned = raw.replace(/\[?Lv\.\s*\d+\]?\s*/gi, '').trim();
+      title = cleaned || '나만의 미래 개척자';
       avatar = '🌟';
-      description = `스스로 정한 멋진 꿈 "${raw}"을(를) 향해 거침없이 전진하는 당찬 주인공입니다!`;
-      highlightStats = '자율성 100 / 잠재력 99';
+      description = `스스로 정한 멋진 꿈 "${title}"을(를) 향해 거침없이 전진하는 당찬 주인공입니다!`;
+      highlightStats = '자율 주도 / 무한 잠재력';
     }
   }
 
-  // 100개 직업 대상 정밀 다차원 스코어링 (4~8개 스윗스팟 도출)
+  // 110개 직업 대상 정밀 다차원 스코어링 (4~8개 스윗스팟 도출)
   const scoredJobs = JOBS_DATABASE.map(job => {
     let score = 0;
 
@@ -347,30 +376,109 @@ export function generateCharacterProfile8(answers: SurveyState8): CharacterProfi
     if (answers.q5_lifestyle === 'public_honor' && (job.tags.includes('public') || job.tags.includes('law') || job.tags.includes('education'))) score += 30;
     if (answers.q5_lifestyle === 'mastery_craft' && (job.category === 'high_prestige' || job.category === 'science_math' || job.tags.includes('specialist'))) score += 25;
 
-    // 6. Q6 기술 스타일 매칭 (가중치 20점)
-    if (answers.q6_techAttitude === 'early_adopter' && (job.stats.tech >= 92 || job.aiTrafficLight.status === 'partner')) score += 20;
-    if (answers.q6_techAttitude === 'human_centered' && (job.stats.communication >= 90 || job.tags.includes('people'))) score += 20;
-    if (answers.q6_techAttitude === 'physical_maker' && (job.tags.includes('physical') || job.tags.includes('grit') || job.category === 'local_biz')) score += 20;
+    // 6. Q6 [5단계 척도] 기술 친화도 매칭
+    if ((answers.q6_techAttitude === 'tech_lv4' || answers.q6_techAttitude === 'tech_lv5') && (job.stats.tech >= 88 || job.aiTrafficLight.status === 'partner')) score += 25;
+    if ((answers.q6_techAttitude === 'tech_lv1' || answers.q6_techAttitude === 'tech_lv2') && (job.stats.communication >= 85 || job.tags.includes('people') || job.category === 'local_biz')) score += 20;
 
-    // 7. Q7 리스크 성향 (가중치 20점)
-    if (answers.q7_riskTolerance === 'all_in_boom' && (job.tags.includes('high_growth') || job.category === 'freelancer' || job.category === 'popular')) score += 25;
-    if (answers.q7_riskTolerance === 'safety_first' && (job.tags.includes('public') || job.tags.includes('corporate') || job.category === 'office')) score += 25;
-    if (answers.q7_riskTolerance === 'license_shield' && (job.prepPeriod.licenseOrDegree.includes('자격증') || job.prepPeriod.licenseOrDegree.includes('면허'))) score += 25;
+    // 7. Q7 [5단계 척도] 도전 주도성 매칭
+    if ((answers.q7_riskTolerance === 'lead_lv4' || answers.q7_riskTolerance === 'lead_lv5') && (job.tags.includes('high_growth') || job.category === 'freelancer' || job.category === 'popular' || job.category === 'high_prestige')) score += 25;
+    if ((answers.q7_riskTolerance === 'lead_lv1' || answers.q7_riskTolerance === 'lead_lv2') && (job.tags.includes('public') || job.tags.includes('corporate') || job.category === 'office')) score += 25;
 
     return { job, score };
   });
 
-  // 정렬 후 상위 6개(4~8개 범위 내 최적 6선) 도출
+  // 정렬 후 상위 6개 도출
   scoredJobs.sort((a, b) => b.score - a.score);
   const recommendedJobs = scoredJobs.slice(0, 6).map(item => item.job);
+
+  // =========================================================================
+  // 🎯 육각형 6대 능력치(HexagonStats) 정밀 점수 산출 (50~98점)
+  // =========================================================================
+  let creativity = 65;
+  let logic = 65;
+  let communication = 65;
+  let grit = 65;
+  let tech = 65;
+  let leadership = 65;
+
+  // 1. Q1 흥미 가산
+  if (answers.q1_interests.includes('tech_code')) { tech += 10; logic += 5; }
+  if (answers.q1_interests.includes('media_art')) { creativity += 14; }
+  if (answers.q1_interests.includes('science_nature')) { logic += 14; tech += 4; }
+  if (answers.q1_interests.includes('writing_lang')) { communication += 8; creativity += 6; }
+  if (answers.q1_interests.includes('people_society')) { communication += 12; leadership += 6; }
+  if (answers.q1_interests.includes('physical_making')) { grit += 12; leadership += 4; }
+
+  // 2. Q2 적성 가산
+  if (answers.q2_aptitude === 'deep_logic') { logic += 10; }
+  if (answers.q2_aptitude === 'creative_expression') { creativity += 10; }
+  if (answers.q2_aptitude === 'social_empathy') { communication += 10; }
+  if (answers.q2_aptitude === 'hands_on_execution') { grit += 10; }
+
+  // 3. Q3 슈퍼파워 강점 가산
+  if (answers.q3_strengths.includes('math_data')) { logic += 9; }
+  if (answers.q3_strengths.includes('art_aesthetic')) { creativity += 9; }
+  if (answers.q3_strengths.includes('persuasion_lead')) { communication += 6; leadership += 9; }
+  if (answers.q3_strengths.includes('iron_grit')) { grit += 9; }
+  if (answers.q3_strengths.includes('tech_fluency')) { tech += 10; }
+
+  // 4. Q4 공간 & Q5 가치관 가산
+  if (answers.q4_workEnv === 'remote_home') { tech += 4; creativity += 4; }
+  if (answers.q4_workEnv === 'giant_plant') { grit += 6; leadership += 4; }
+  if (answers.q5_lifestyle === 'wealth_growth') { leadership += 6; grit += 4; }
+  if (answers.q5_lifestyle === 'mastery_craft') { logic += 5; grit += 5; }
+
+  // 5. Q6 [5단계 선택형]: AI & 기술 적극도 (1~5단계 -> 4~20점 직접 가산)
+  const techMap: Record<string, number> = {
+    'tech_lv1': 4,
+    'tech_lv2': 8,
+    'tech_lv3': 12,
+    'tech_lv4': 16,
+    'tech_lv5': 20,
+    // 레거시 id 호환
+    'early_adopter': 18,
+    'human_centered': 8,
+    'physical_maker': 10
+  };
+  const techBonus = techMap[answers.q6_techAttitude] ?? 12;
+  tech += techBonus;
+  logic += Math.round(techBonus * 0.3);
+
+  // 6. Q7 [5단계 선택형]: 도전 & 주도성 (1~5단계 -> 4~20점 직접 가산)
+  const leadMap: Record<string, number> = {
+    'lead_lv1': 4,
+    'lead_lv2': 8,
+    'lead_lv3': 12,
+    'lead_lv4': 16,
+    'lead_lv5': 20,
+    // 레거시 id 호환
+    'all_in_boom': 18,
+    'safety_first': 6,
+    'license_shield': 12
+  };
+  const leadBonus = leadMap[answers.q7_riskTolerance] ?? 12;
+  leadership += leadBonus;
+  grit += Math.round(leadBonus * 0.4);
+
+  // 최종 점수 clamp (50 ~ 98점 범위)
+  const clampScore = (val: number) => Math.min(98, Math.max(50, Math.round(val)));
+
+  const stats = {
+    creativity: clampScore(creativity),
+    logic: clampScore(logic),
+    communication: clampScore(communication),
+    grit: clampScore(grit),
+    tech: clampScore(tech),
+    leadership: clampScore(leadership)
+  };
 
   return {
     code,
     title,
     avatar,
     description,
-    level: 1,
     highlightStats,
+    stats,
     recommendedJobs
   };
 }
