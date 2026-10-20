@@ -15,7 +15,7 @@ import { ExploreJobsView } from './components/ExploreJobsView';
 import { UnregisteredJobModal } from './components/UnregisteredJobModal';
 import { QRCodeModal } from './components/QRCodeModal';
 
-import { Sparkles, Compass, ArrowRight, QrCode, Database, Search, User } from 'lucide-react';
+import { Sparkles, Compass, ArrowRight, QrCode, Database, Search, User, Coins } from 'lucide-react';
 
 export function App() {
   // URL 딥링크 공유 파라미터 파싱
@@ -104,6 +104,11 @@ export function App() {
 
   // Picked Jobs Objects
   const pickedJobs = JOBS_DATABASE.filter(j => pickedJobIds.includes(j.id));
+
+  // Recommended Jobs Average Salary for Living Cost Calculator
+  const recommendedAvgSalary = profile?.recommendedJobs?.length 
+    ? Math.round(profile.recommendedJobs.reduce((acc, j) => acc + j.moneyTruth.entrySalary, 0) / profile.recommendedJobs.length)
+    : 4500;
 
   // Sync to LocalStorage
   useEffect(() => {
@@ -274,6 +279,8 @@ export function App() {
               </div>
             </section>
 
+            
+
             {/* 홈 화면 안내 카드 3종 (시작부터 직업 리스트가 쏟아지지 않아 정보 과잉 해소) */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="bg-white p-5 rounded-3xl border border-slate-200/80 shadow-xs space-y-2.5">
@@ -389,6 +396,21 @@ export function App() {
 
               {/* Action Buttons */}
               <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+                {/* 🌟 물가 체험 시뮬레이터 바로보기 버튼 (연봉 감잡기) */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    const el = document.getElementById('result-living-cost-section');
+                    if (el) {
+                      el.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
+                  className="flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-sm sm:text-base shadow-md shadow-emerald-600/30 active:scale-95 transition-all cursor-pointer border border-emerald-400/40 group"
+                  title="서울 vs 지방 체감 물가 및 아파트 내 집 마련 시뮬레이터로 바로 이동"
+                >
+                  <Coins className="w-5 h-5 text-amber-300 group-hover:rotate-12 transition-transform" />
+                  <span>🏙️ 서울 vs 지방 체감 물가 계산기 바로보기</span>
+                </button>
                 <button
                   type="button"
                   onClick={() => {
@@ -417,6 +439,49 @@ export function App() {
                   <span>🏠 처음 화면으로</span>
                 </button>
               </div>
+            </section>
+
+            {/* 4. 체감 경제 & 주거 격차 시뮬레이터 (추천 직업 연봉 기준 현실 물가 체험) */}
+            <section id="result-living-cost-section" className="space-y-4 pt-2 scroll-mt-20">
+              {/* 상단 복귀 안내 바 */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 sm:p-5 rounded-3xl bg-slate-900 text-white shadow-xl border-2 border-slate-700/80">
+                <div className="flex items-start sm:items-center gap-3">
+                  <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-amber-400 to-amber-500 text-slate-950 flex items-center justify-center text-xl shrink-0 shadow-md">
+                    💡
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-emerald-400 text-slate-950">
+                        현실 경제 실험실
+                      </span>
+                      <span className="text-xs text-indigo-200 font-mono">
+                        추천 직업 평균 연봉 약 {recommendedAvgSalary.toLocaleString()}만 원 기준
+                      </span>
+                    </div>
+                    <h3 className="text-base sm:text-lg font-black text-white mt-0.5">
+                      {profile.title}님의 추천 직업 연봉, 서울 vs 지방에서 실제로 얼마나 남을까?
+                    </h3>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs sm:text-sm transition-all shadow-md active:scale-95 shrink-0 cursor-pointer"
+                  title="페이지 맨 위 내 추천 직업 목록으로 돌아가기"
+                >
+                  <span>⬆️ 내 추천 직업으로 돌아가기</span>
+                </button>
+              </div>
+
+              {/* 시뮬레이터 위젯 */}
+              <LivingCostSlider 
+                key={`result-cost-${recommendedAvgSalary}`}
+                initialSalary={recommendedAvgSalary}
+                onBackToResult={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              />
             </section>
 
           </div>

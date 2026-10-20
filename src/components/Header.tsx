@@ -1,6 +1,6 @@
 // src/components/Header.tsx
 import React from 'react';
-import { Compass, Sparkles, Search, RefreshCw, Home } from 'lucide-react';
+import { Compass, Sparkles, Search, RefreshCw, Home, FileText, Download } from 'lucide-react';
 
 interface HeaderProps {
   currentTab: 'home' | 'explore' | 'result';
@@ -110,6 +110,18 @@ export const Header: React.FC<HeaderProps> = ({
               <RefreshCw className="w-3.5 h-3.5 sm:w-4 sm:h-4" aria-hidden="true" />
             </button>
           )}
+          {/* 공식 가이드 안내서 다운로드 버튼 (헤더 우측 작게 배치) */}
+          <a
+            href="/USER_GUIDE.md"
+            download="내일찾기_공식_사용안내서.md"
+            className="flex items-center gap-1 px-2 sm:px-2.5 py-1.5 rounded-xl text-[11px] sm:text-xs font-bold text-slate-600 hover:text-indigo-600 hover:bg-slate-100 border border-slate-200/90 transition-all shrink-0 whitespace-nowrap focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-indigo-600 group"
+            title="초·중학교 교사용 및 학생용 공식 사용 안내서(USER_GUIDE.md) 다운로드"
+          >
+            <FileText className="w-3.5 h-3.5 text-indigo-600 shrink-0" aria-hidden="true" />
+            <span className="hidden sm:inline">가이드 안내서</span>
+            <span className="sm:hidden">가이드</span>
+            <Download className="w-3 h-3 text-slate-400 group-hover:text-indigo-600 shrink-0" aria-hidden="true" />
+          </a>
         </nav>
       </div>
     </header>

@@ -1,14 +1,16 @@
 // src/components/LivingCostSlider.tsx
 import React, { useState } from 'react';
 import { calculateCostComparison } from '../utils/costCalculator';
-import { Coins, Home, Building2, Sparkles, Building, KeyRound } from 'lucide-react';
+import { Coins, Home, Building2, Sparkles, Building, KeyRound, ArrowUp } from 'lucide-react';
 
 interface LivingCostSliderProps {
   initialSalary?: number;
+  onBackToResult?: () => void;
 }
 
 export const LivingCostSlider: React.FC<LivingCostSliderProps> = ({
-  initialSalary = 4500
+  initialSalary = 4500,
+  onBackToResult
 }) => {
   const [annualSalary, setAnnualSalary] = useState<number>(initialSalary);
   const costData = calculateCostComparison(annualSalary);
@@ -37,12 +39,25 @@ export const LivingCostSlider: React.FC<LivingCostSliderProps> = ({
           </p>
         </div>
 
-        {/* Live Monthly Net Salary Tag */}
-        <div className="bg-indigo-50 border border-indigo-200 p-3 rounded-2xl text-right shrink-0">
-          <span className="text-[11px] text-slate-500 font-medium">예상 월 실수령액 (세후)</span>
-          <p className="text-xl sm:text-2xl font-black text-indigo-700">
-            월 약 {costData.monthlyNetSalary.toLocaleString()}만 원
-          </p>
+        {/* Live Monthly Net Salary Tag & Back to Result Button */}
+        <div className="flex items-center gap-2 shrink-0">
+          <div className="bg-indigo-50 border border-indigo-200 p-3 rounded-2xl text-right">
+            <span className="text-[11px] text-slate-500 font-medium">예상 월 실수령액 (세후)</span>
+            <p className="text-xl sm:text-2xl font-black text-indigo-700">
+              월 약 {costData.monthlyNetSalary.toLocaleString()}만 원
+            </p>
+          </div>
+          {onBackToResult && (
+            <button
+              type="button"
+              onClick={onBackToResult}
+              className="p-3 rounded-2xl bg-slate-900 hover:bg-slate-800 text-amber-300 hover:text-white font-bold text-xs flex flex-col items-center justify-center gap-1 transition-all shadow-xs shrink-0 cursor-pointer"
+              title="내 추천 직업 결과 화면으로 바로 돌아가기"
+            >
+              <ArrowUp className="w-4 h-4 text-amber-400" />
+              <span className="text-[10px] whitespace-nowrap">결과로 복귀</span>
+            </button>
+          )}
         </div>
       </div>
 
