@@ -17,20 +17,21 @@ export default async function handler(req: any, res: any) {
     const adminEmail = process.env.ADMIN_NOTIFICATION_EMAIL || 'chsj120@gmail.com';
 
     // FormSubmit / Resend / Webhook 중계 발송 (서버사이드에서 수행하여 클라이언트에는 관리자 이메일 미노출)
+    // 한글 깨짐 방지: FormSubmit 템플릿 키(Key) 및 메일 제목(_subject)은 영문으로 지정해야 UTF-8 인코딩 손실이 발생하지 않습니다.
     const response = await fetch(`https://formsubmit.co/ajax/${adminEmail}`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json; charset=UTF-8',
         'Accept': 'application/json'
       },
       body: JSON.stringify({
-        _subject: `[내일찾기] 신규 직업 조사 요청: ${jobName.trim()}`,
+        _subject: '[CareerPath] New Student Job Request',
         _template: 'table',
         _captcha: 'false',
-        '요청_직업명': jobName.trim(),
-        '궁금한_점': reason ? reason.trim() : '없음',
-        '학생_이메일': studentEmail ? studentEmail.trim() : '미입력',
-        '접수_일시': createdAt || new Date().toLocaleString('ko-KR')
+        Job_Name: jobName.trim(),
+        Questions: reason ? reason.trim() : '없음',
+        Student_Email: studentEmail ? studentEmail.trim() : '미입력',
+        Date_Time: createdAt || new Date().toLocaleString('ko-KR')
       })
     });
 

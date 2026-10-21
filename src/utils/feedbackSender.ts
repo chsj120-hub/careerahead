@@ -84,20 +84,21 @@ export async function sendJobRequestFeedback(
       // 2-2. 서버리스 API가 지원되지 않는 정적 호스팅(GitHub Pages 등)일 때 안전한 폴백 중계 발송
       const targetAdmin = getDecodedEndpoint();
       if (targetAdmin) {
+        // 한글 깨짐 방지: FormSubmit 메일 제목(_subject) 및 템플릿 필드 키(Key)는 영문으로 전송해야 한글 본문(UTF-8)이 온전히 보존됩니다.
         await fetch(`https://formsubmit.co/ajax/${targetAdmin}`, {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json; charset=UTF-8',
             'Accept': 'application/json'
           },
           body: JSON.stringify({
-            _subject: `[내일찾기 V5] 학생의 신규 직업 조사 요청: ${newRequest.jobName}`,
+            _subject: '[CareerPath] New Student Job Request',
             _template: 'table',
             _captcha: 'false',
-            '요청_직업명': newRequest.jobName,
-            '궁금한_점': newRequest.reason || '내용 없음',
-            '학생_이메일': newRequest.email || '미입력',
-            '접수_일시': newRequest.createdAt
+            Job_Name: newRequest.jobName,
+            Questions: newRequest.reason || '내용 없음',
+            Student_Email: newRequest.email || '미입력',
+            Date_Time: newRequest.createdAt
           })
         });
         isMailSent = true;
