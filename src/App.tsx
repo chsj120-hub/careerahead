@@ -14,8 +14,11 @@ import { ShareableResultCard } from './components/ShareableResultCard';
 import { ExploreJobsView } from './components/ExploreJobsView';
 import { UnregisteredJobModal } from './components/UnregisteredJobModal';
 import { QRCodeModal } from './components/QRCodeModal';
+import { AdminAnalyticsModal } from './components/AdminAnalyticsModal';
+import { Analytics } from '@vercel/analytics/react';
+import { trackVisit, trackJobView, trackPick, trackSurveyComplete } from './utils/activityTracker';
 
-import { Sparkles, Compass, ArrowRight, QrCode, Database, Search, User, Coins } from 'lucide-react';
+import { Sparkles, Compass, ArrowRight, QrCode, Database, Search, User, Coins, BarChart3 } from 'lucide-react';
 
 export function App() {
   // URL 딥링크 공유 파라미터 파싱
@@ -76,6 +79,7 @@ export function App() {
   });
   const [isUnregisteredOpen, setIsUnregisteredOpen] = useState<boolean>(false);
   const [isQROpen, setIsQROpen] = useState<boolean>(false);
+  const [isAdminAnalyticsOpen, setIsAdminAnalyticsOpen] = useState<boolean>(false);
   const [unregisteredKeyword, setUnregisteredKeyword] = useState<string>('');
   
   // Selected Job for Detail Modal
@@ -121,22 +125,35 @@ export function App() {
     localStorage.setItem('career_picked_job_ids', JSON.stringify(pickedJobIds));
   }, [pickedJobIds]);
 
+  // Track initial visit on mount
+  useEffect(() => {
+    trackVisit();
+  }, []);
+
   // Handle Survey Completion
   const handleCompleteSurvey = (survey: SurveyState8) => {
     const newProfile = generateCharacterProfile8(survey);
     setProfile(newProfile);
     setIsSurveyOpen(false);
     setCurrentTab('result');
+    trackSurveyComplete(newProfile.title);
   };
 
   // Toggle Pick
   const handleTogglePick = (job: Job, e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
+    trackPick(job.title, !pickedJobIds.includes(job.id));
     if (pickedJobIds.includes(job.id)) {
       setPickedJobIds(pickedJobIds.filter(id => id !== job.id));
     } else {
       setPickedJobIds([...pickedJobIds, job.id]);
     }
+  };
+
+  // Open Job Detail Modal with view tracking
+  const handleSelectJob = (job: Job) => {
+    setSelectedJob(job);
+    if (job) trackJobView(job.title);
   };
 
   // Open Unregistered Request
@@ -344,7 +361,7 @@ export function App() {
               profile={profile}
               pickedJobs={pickedJobs}
               onOpenShareModal={() => setIsShareModalOpen(true)}
-              onSelectJob={(job) => setSelectedJob(job)}
+              onSelectJob={handleSelectJob}
             />
 
             {/* 2. Tailored Recommendations for Character */}
@@ -370,7 +387,7 @@ export function App() {
                     job={job}
                     isPicked={pickedJobIds.includes(job.id)}
                     onTogglePick={handleTogglePick}
-                    onSelect={(j) => setSelectedJob(j)}
+                    onSelect={handleSelectJob}
                   />
                 ))}
               </div>
@@ -495,7 +512,7 @@ export function App() {
               jobs={JOBS_DATABASE}
               pickedJobIds={pickedJobIds}
               onTogglePick={handleTogglePick}
-              onSelectJob={(j) => setSelectedJob(j)}
+              onSelectJob={handleSelectJob}
               onRequestMissingJob={handleRequestMissingJob}
             />
 
@@ -543,8 +560,18 @@ export function App() {
             </div>
           </div>
 
-          <div className="pt-4 text-center text-slate-400 text-[10px]">
-            © 2026 내일찾기 (CareerPath Finder) V5. All Rights Reserved.
+
+          <div className="pt-4 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-2 text-slate-400 text-[10px]">
+            <span>© 2026 내일찾기 (CareerPath Finder) V5. All Rights Reserved.</span>
+            <button
+              type="button"
+              onClick={() => setIsAdminAnalyticsOpen(true)}
+              className="inline-flex items-center gap-1 text-slate-400 hover:text-slate-200 transition-colors cursor-pointer p-1 rounded-md"
+              title="관리자 전용 활동 통계 리포트 이메일 받기"
+            >
+              <BarChart3 className="w-3 h-3 text-slate-400" />
+              <span>[관리자용 활동 통계 이메일 받기]</span>
+            </button>
           </div>
         </div>
       </footer>
@@ -583,6 +610,15 @@ export function App() {
         isOpen={isQROpen}
         onClose={() => setIsQROpen(false)}
       />
+
+      {/* 관리자용 활동 통계 리포트 모달 */}
+      <AdminAnalyticsModal
+        isOpen={isAdminAnalyticsOpen}
+        onClose={() => setIsAdminAnalyticsOpen(false)}
+      />
+
+      {/* Vercel Web Analytics (전체 접속자 수 및 지역 분석) */}
+      <Analytics />
 
       {/* 📱 Mobile Fixed Bottom Navigation Bar (한 손 엄지손가락 내비게이션 지원) */}
       <nav 

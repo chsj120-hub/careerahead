@@ -1,7 +1,8 @@
 // src/components/LivingCostSlider.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { calculateCostComparison } from '../utils/costCalculator';
 import { Coins, Home, Building2, Sparkles, Building, KeyRound, ArrowUp } from 'lucide-react';
+import { trackSalarySimulation } from '../utils/activityTracker';
 
 interface LivingCostSliderProps {
   initialSalary?: number;
@@ -14,6 +15,14 @@ export const LivingCostSlider: React.FC<LivingCostSliderProps> = ({
 }) => {
   const [annualSalary, setAnnualSalary] = useState<number>(initialSalary);
   const costData = calculateCostComparison(annualSalary);
+
+  // 연봉 조절 시 통계 집계 (1초 디바운스)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      trackSalarySimulation(annualSalary);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [annualSalary]);
 
   return (
     <div className="bg-white rounded-3xl p-5 sm:p-7 border-2 border-indigo-200/90 shadow-xl relative overflow-hidden">

@@ -1,9 +1,10 @@
 // src/components/ExploreJobsView.tsx
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Job } from '../types/career';
 import { CATEGORIES_INFO } from '../data/jobsData';
 import { JobCard } from './JobCard';
 import { Search, SlidersHorizontal, PlusCircle, AlertCircle } from 'lucide-react';
+import { trackSearch } from '../utils/activityTracker';
 
 import { getTop10SalaryInfo } from '../data/top10SalaryCalculator';
 
@@ -38,6 +39,17 @@ export const ExploreJobsView: React.FC<ExploreJobsViewProps> = ({
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [sortBy, setSortBy] = useState<'default' | 'top10Salary' | 'tenYearSalary' | 'entrySalary' | 'prepTime'>('default');
+
+  // 검색어 입력 시 활동 통계 자동 집계
+  useEffect(() => {
+    const q = searchQuery.trim();
+    if (q.length >= 2) {
+      const timer = setTimeout(() => {
+        trackSearch(q);
+      }, 800);
+      return () => clearTimeout(timer);
+    }
+  }, [searchQuery]);
 
   // 필터링 및 정렬
   const filteredJobs = useMemo(() => {
