@@ -47,27 +47,27 @@ export default async function handler(req: any, res: any) {
         ).join('\n')
       : '추가 요청된 직업 없음';
 
-    // FormSubmit 중계 발송
+    // FormSubmit 중계 발송 (한글 깨짐 방지를 위해 영문 Key 및 charset=UTF-8 사용)
     const response = await fetch(`https://formsubmit.co/ajax/${recipientEmail}`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json; charset=UTF-8',
         'Accept': 'application/json'
       },
       body: JSON.stringify({
-        _subject: `[내일찾기] 📊 활동 통계 & 직업 탐색 종합 리포트 (${nowStr})`,
+        _subject: `[CareerPath] Activity & Job Analytics Report (${nowStr})`,
         _template: 'table',
         _captcha: 'false',
-        '리포트_생성_일시': nowStr,
-        '총_접속_세션_수': `${stats?.totalVisits || 0}회 (최초: ${stats?.firstVisit || '기록없음'})`,
-        '진로_퀘스트_완료_수': `${stats?.completedSurveysCount || 0}회`,
-        '인기_검색_키워드_TOP': topKeywords,
-        '학생들이_가장_많이_본_직업_TOP': topViewedJobs,
-        '학생들이_가장_많이_찜한_직업_TOP': topPickedJobs,
-        '진로_캐릭터_유형_분포': topCharacters,
-        '물가체험_학생_희망연봉_구간': topSalaries,
-        '학생들이_추가_요청한_직업_목록': recentRequests,
-        '안내_사항': '본 리포트는 학생들의 실제 검색 및 직업 탐색 로그를 기반으로 생성되었습니다. Vercel Web Analytics 대시보드를 통해 접속 국가 및 시/도 지역 통계도 함께 확인하실 수 있습니다.'
+        Report_Date: nowStr,
+        Total_Visits: `${stats?.totalVisits || 0}회 (최초: ${stats?.firstVisit || '기록없음'})`,
+        Surveys_Completed: `${stats?.completedSurveysCount || 0}회`,
+        Top_Search_Keywords: topKeywords,
+        Top_Viewed_Jobs: topViewedJobs,
+        Top_Picked_Jobs: topPickedJobs,
+        Character_Distribution: topCharacters,
+        Salary_Simulations: topSalaries,
+        Unregistered_Job_Requests: recentRequests,
+        Notice: '본 리포트는 학생들의 실제 검색 및 직업 탐색 로그를 기반으로 생성되었습니다. Vercel Web Analytics 대시보드를 통해 접속 국가 및 시/도 지역 통계도 함께 확인하실 수 있습니다.'
       })
     });
 

@@ -73,11 +73,11 @@ export const AdminAnalyticsModal: React.FC<AdminAnalyticsModalProps> = ({
         await fetch(`https://formsubmit.co/ajax/${email.trim()}`, {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json; charset=UTF-8',
             'Accept': 'application/json'
           },
           body: JSON.stringify({
-            _subject: `[내일찾기] 📊 활동 통계 & 직업 탐색 종합 리포트`,
+            _subject: '[CareerPath] Activity & Job Analytics Report',
             _template: 'table',
             _captcha: 'false',
             '접속_세션_수': `${stats.totalVisits}회`,
