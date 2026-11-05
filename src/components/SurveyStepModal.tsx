@@ -142,10 +142,16 @@ export const SurveyStepModal: React.FC<SurveyStepModalProps> = ({
   const handleSelectOption = (optId: string) => {
     switch (currentStepIndex) {
       case 0: // Q1 다중 (최대 2개)
-        if (q1.includes(optId)) {
+        if (optId === 'unknown_explore') {
+          if (q1.includes('unknown_explore')) {
+            setQ1([]);
+          } else {
+            setQ1(['unknown_explore']);
+          }
+        } else if (q1.includes(optId)) {
           setQ1(q1.filter(id => id !== optId));
-        } else if (q1.length < 2) {
-          setQ1([...q1, optId]);
+        } else if (q1.filter(id => id !== 'unknown_explore').length < 2) {
+          setQ1([...q1.filter(id => id !== 'unknown_explore'), optId]);
         }
         break;
       case 1: // Q2 단일
@@ -368,8 +374,16 @@ export const SurveyStepModal: React.FC<SurveyStepModalProps> = ({
         <div className="p-5 sm:p-6 overflow-y-auto flex-1 bg-slate-50/50">
           <div className="mb-4">
             <div className="flex items-center gap-2">
-              <span className="text-xs font-bold px-2 py-0.5 rounded bg-indigo-100 text-indigo-700">
-                {currentConfig.isMultiSelect ? `복수 선택 (최대 ${currentConfig.maxSelect}개)` : '단일 선택 (1개)'}
+              <span className={`text-xs font-bold px-2 py-0.5 rounded ${
+                currentStepIndex === 0 && q1.includes('unknown_explore')
+                  ? 'bg-amber-100 text-amber-900 border border-amber-300'
+                  : 'bg-indigo-100 text-indigo-700'
+              }`}>
+                {currentStepIndex === 0 && q1.includes('unknown_explore')
+                  ? '🧭 다양한 분야 탐색 모드 (골고루 추천)'
+                  : currentConfig.isMultiSelect 
+                    ? `복수 선택 (최대 ${currentConfig.maxSelect}개)` 
+                    : '단일 선택 (1개)'}
               </span>
             </div>
             <h3 id="survey-modal-title" className="text-base sm:text-lg font-black text-slate-900 mt-1.5 tracking-tight">
@@ -410,6 +424,8 @@ export const SurveyStepModal: React.FC<SurveyStepModalProps> = ({
                   type="button"
                   onClick={() => handleSelectOption(opt.id)}
                   className={`text-left p-3.5 sm:p-4 rounded-2xl border-2 transition-all flex items-start gap-3 relative group ${
+                    opt.id === 'unknown_explore' ? 'sm:col-span-2' : ''
+                  } ${
                     selected 
                       ? 'border-indigo-600 bg-indigo-50/80 shadow-md ring-2 ring-indigo-200' 
                       : 'border-slate-200 bg-white hover:border-indigo-300 hover:bg-slate-50/90'

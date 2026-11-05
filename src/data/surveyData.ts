@@ -29,7 +29,7 @@ export const SURVEY_STEPS: SurveyStepConfig[] = [
     step: 1,
     category: '흥미',
     title: 'Q1. 학교나 일상에서 어떤 분야가 가장 재미있고 관심 가나요?',
-    subtitle: '관심 가거나 가슴 뛰는 분야를 최대 2개 골라보세요. (아이콘에 마우스를 올리면 예시가 나와요!)',
+    subtitle: '관심 가거나 가슴 뛰는 분야를 최대 2개 골라보세요. (잘 모르겠다면 "잘 모르겠음"을 선택해보세요!)',
     isMultiSelect: true,
     maxSelect: 2,
     options: [
@@ -80,6 +80,14 @@ export const SURVEY_STEPS: SurveyStepConfig[] = [
         icon: '🍳', 
         tag: '체육·실과',
         tooltip: '예: 축구·농구 경기, 주말 홈베이킹, 레고 조립, 자전거 타기'
+      },
+      { 
+        id: 'unknown_explore', 
+        title: '아직 잘 모르겠음 (다양한 직업 탐색)', 
+        subtitle: '어떤 분야가 맞는지 아직 잘 모르겠어요! 다양한 직업을 골고루 추천받아 제 흥미를 찾아보고 싶어요.', 
+        icon: '🧭', 
+        tag: '다양한 탐색',
+        tooltip: '아직 무엇을 좋아하는지 잘 몰라도 괜찮아요! 여러 분야의 대표 직업들을 골고루 추천해 드립니다.'
       },
     ]
   },
@@ -284,16 +292,21 @@ export const SURVEY_STEPS: SurveyStepConfig[] = [
 // =========================================================================
 export function generateCharacterProfile8(answers: SurveyState8): CharacterProfile {
   // 성향 코드 생성
-  const q1Code = answers.q1_interests[0] ? answers.q1_interests[0].slice(0, 1).toUpperCase() : 'T';
+  const isUnknownExplore = answers.q1_interests.includes('unknown_explore');
+  const q1Code = isUnknownExplore 
+    ? 'E' 
+    : (answers.q1_interests[0] ? answers.q1_interests[0].slice(0, 1).toUpperCase() : 'T');
   const q2Code = answers.q2_aptitude ? answers.q2_aptitude.slice(0, 1).toUpperCase() : 'L';
   const q4Code = answers.q4_workEnv ? answers.q4_workEnv.slice(0, 1).toUpperCase() : 'O';
   const code = `[${q2Code}-${q1Code}-${q4Code}]`;
 
   // 대표 칭호 및 아바타 결정 (학생 직접 입력 칭호 최우선 반영!)
-  let title = '미래를 여는 지혜로운 탐험가';
-  let avatar = '🌟';
-  let description = '다양한 역량을 균형 있게 갖추고 자신만의 길을 개척하는 잠재력 가득한 탐험가입니다.';
-  let highlightStats = '균형 잡힌 육각형 역량';
+  let title = isUnknownExplore ? '다채로운 가능성의 진로 탐험가' : '미래를 여는 지혜로운 탐험가';
+  let avatar = isUnknownExplore ? '🧭' : '🌟';
+  let description = isUnknownExplore
+    ? '아직 한 분야에 갇히지 않고, 세상의 무궁무진한 직업들을 열린 마음으로 탐색하며 나만의 꿈을 찾는 열정적인 탐험가입니다.'
+    : '다양한 역량을 균형 있게 갖추고 자신만의 길을 개척하는 잠재력 가득한 탐험가입니다.';
+  let highlightStats = isUnknownExplore ? '다양한 직업 스펙트럼 탐색' : '균형 잡힌 육각형 역량';
 
   // 사용자가 칭호를 직접 입력했거나 선택한 경우
   if (answers.q8_dreamTitle && answers.q8_dreamTitle.trim()) {
@@ -389,7 +402,28 @@ export function generateCharacterProfile8(answers: SurveyState8): CharacterProfi
 
   // 정렬 후 상위 6개 도출
   scoredJobs.sort((a, b) => b.score - a.score);
-  const recommendedJobs = scoredJobs.slice(0, 6).map(item => item.job);
+  // '잘 모르겠음'을 선택한 경우: 여러 직업군을 폭넓게 접할 수 있도록 서로 다른 카테고리에서 1개씩 우선 선별 (총 6개)
+  let recommendedJobs: typeof JOBS_DATABASE = [];
+  if (isUnknownExplore) {
+    const selectedCategories = new Set<string>();
+    for (const item of scoredJobs) {
+      if (!selectedCategories.has(item.job.category)) {
+        selectedCategories.add(item.job.category);
+        recommendedJobs.push(item.job);
+        if (recommendedJobs.length >= 6) break;
+      }
+    }
+    if (recommendedJobs.length < 6) {
+      for (const item of scoredJobs) {
+        if (!recommendedJobs.some(j => j.id === item.job.id)) {
+          recommendedJobs.push(item.job);
+          if (recommendedJobs.length >= 6) break;
+        }
+      }
+    }
+  } else {
+    recommendedJobs = scoredJobs.slice(0, 6).map(item => item.job);
+  }
 
   // =========================================================================
   // 🎯 육각형 6대 능력치(HexagonStats) 정밀 점수 산출 (50~98점)
@@ -408,6 +442,14 @@ export function generateCharacterProfile8(answers: SurveyState8): CharacterProfi
   if (answers.q1_interests.includes('writing_lang')) { communication += 8; creativity += 6; }
   if (answers.q1_interests.includes('people_society')) { communication += 12; leadership += 6; }
   if (answers.q1_interests.includes('physical_making')) { grit += 12; leadership += 4; }
+  if (answers.q1_interests.includes('unknown_explore')) {
+    creativity += 4;
+    logic += 4;
+    communication += 4;
+    grit += 4;
+    tech += 4;
+    leadership += 4;
+  }
 
   // 2. Q2 적성 가산
   if (answers.q2_aptitude === 'deep_logic') { logic += 10; }
