@@ -95,6 +95,8 @@ export interface CharacterProfile {
   highlightStats: string;
   stats?: HexagonStats;   // 육각형 능력치
   recommendedJobs: Job[]; // 4~8개 엄선
+  futureResolution?: string;         // 10년 뒤 나의 미래 모습 & 한 줄 다짐
+  jobNotes?: Record<string, string>; // 내가 찜한 직업별 한 줄 메모/이유 (jobId -> 메모)
 }
 
 // 8단계 세분화 설문 상태 인터페이스

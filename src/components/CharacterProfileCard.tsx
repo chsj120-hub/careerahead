@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { CharacterProfile, Job, ResultThemeKey } from '../types/career';
 import { HexagonRadarChart } from './HexagonRadarChart';
 import { ChibiCharacter } from './ChibiCharacter';
-import { Heart, Zap, Share2, Palette, Compass, Sparkles } from 'lucide-react';
+import { Heart, Zap, Share2, Palette, Compass, Sparkles, Edit3 } from 'lucide-react';
 
 interface CharacterProfileCardProps {
   profile: CharacterProfile;
   pickedJobs: Job[];
   onOpenShareModal: () => void;
   onSelectJob: (job: Job) => void;
+  onOpenEditModal?: () => void;
   selectedTheme?: ResultThemeKey;
   onThemeChange?: (theme: ResultThemeKey) => void;
 }
@@ -99,6 +100,7 @@ export const CharacterProfileCard: React.FC<CharacterProfileCardProps> = ({
   pickedJobs,
   onOpenShareModal,
   onSelectJob,
+  onOpenEditModal,
   selectedTheme,
   onThemeChange
 }) => {
@@ -194,6 +196,18 @@ export const CharacterProfileCard: React.FC<CharacterProfileCardProps> = ({
             })}
           </div>
 
+          {onOpenEditModal && (
+            <button
+              type="button"
+              onClick={onOpenEditModal}
+              className="flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-black text-xs shadow-xs transition-transform active:scale-95 shrink-0"
+              title="호칭(칭호), 아바타 및 10년 뒤 나의 다짐 수정하기"
+            >
+              <Edit3 className="w-3.5 h-3.5 text-amber-300" />
+              <span>호칭·미래 다짐 꾸미기</span>
+            </button>
+          )}
+
           <button
             onClick={onOpenShareModal}
             className="flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 font-black text-xs shadow-sm hover:from-amber-300 hover:to-amber-400 transition-transform active:scale-95 shrink-0"
@@ -238,6 +252,25 @@ export const CharacterProfileCard: React.FC<CharacterProfileCardProps> = ({
             <p className={`text-xs mt-1 leading-relaxed font-normal ${themeConfig.textDesc}`}>
               {profile.description}
             </p>
+
+            {/* 10년 뒤 나의 미래 다짐 & 한 줄 결의 (학생 입력값) */}
+            {profile.futureResolution && (
+              <div className={`mt-2.5 p-2.5 rounded-xl border flex items-start gap-2 text-xs ${
+                themeConfig.isLight 
+                  ? 'bg-amber-50/90 border-amber-300/80 text-amber-950' 
+                  : 'bg-amber-950/40 border-amber-400/40 text-amber-200'
+              }`}>
+                <span className="text-base leading-none">💬</span>
+                <div className="flex-1">
+                  <span className="font-black text-[11px] block text-amber-600 dark:text-amber-400">
+                    🌱 10년 뒤 나의 미래 모습 & 다짐
+                  </span>
+                  <p className="mt-0.5 leading-snug font-medium whitespace-pre-wrap">
+                    {profile.futureResolution}
+                  </p>
+                </div>
+              </div>
+            )}
 
             {/* 특기 & 찜 뱃지 */}
             <div className="mt-2.5 flex flex-wrap items-center justify-center sm:justify-start gap-1.5 text-xs">
@@ -308,6 +341,11 @@ export const CharacterProfileCard: React.FC<CharacterProfileCardProps> = ({
               >
                 <span>{job.icon}</span>
                 <span>{job.title}</span>
+                {profile.jobNotes?.[job.id] && (
+                  <span className="ml-1 px-1.5 py-0.2 rounded-full bg-slate-900 text-amber-300 text-[10px] font-bold" title={profile.jobNotes[job.id]}>
+                    📝 메모
+                  </span>
+                )}
               </button>
             ))}
           </div>

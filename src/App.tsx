@@ -15,6 +15,7 @@ import { ExploreJobsView } from './components/ExploreJobsView';
 import { UnregisteredJobModal } from './components/UnregisteredJobModal';
 import { QRCodeModal } from './components/QRCodeModal';
 import { AdminAnalyticsModal } from './components/AdminAnalyticsModal';
+import { EditFutureProfileModal } from './components/EditFutureProfileModal';
 import { Analytics } from '@vercel/analytics/react';
 import { trackVisit, trackJobView, trackPick, trackSurveyComplete } from './utils/activityTracker';
 
@@ -80,6 +81,7 @@ export function App() {
   const [isUnregisteredOpen, setIsUnregisteredOpen] = useState<boolean>(false);
   const [isQROpen, setIsQROpen] = useState<boolean>(false);
   const [isAdminAnalyticsOpen, setIsAdminAnalyticsOpen] = useState<boolean>(false);
+  const [isEditProfileOpen, setIsEditProfileOpen] = useState<boolean>(false);
   const [unregisteredKeyword, setUnregisteredKeyword] = useState<string>('');
   
   // Selected Job for Detail Modal
@@ -129,6 +131,16 @@ export function App() {
   useEffect(() => {
     trackVisit();
   }, []);
+
+  // Handle Profile Update (칭호, 미래 다짐, 직업별 메모 수정)
+  const handleUpdateProfile = (updated: CharacterProfile) => {
+    setProfile(updated);
+    try {
+      localStorage.setItem('career_user_profile', JSON.stringify(updated));
+    } catch {
+      // silent
+    }
+  };
 
   // Handle Survey Completion
   const handleCompleteSurvey = (survey: SurveyState8) => {
@@ -362,6 +374,7 @@ export function App() {
               pickedJobs={pickedJobs}
               onOpenShareModal={() => setIsShareModalOpen(true)}
               onSelectJob={handleSelectJob}
+              onOpenEditModal={() => setIsEditProfileOpen(true)}
             />
 
             {/* 2. Tailored Recommendations for Character */}
@@ -590,6 +603,16 @@ export function App() {
         isPicked={selectedJob ? pickedJobIds.includes(selectedJob.id) : false}
         onTogglePick={(j) => handleTogglePick(j)}
       />
+
+      {profile && (
+        <EditFutureProfileModal
+          isOpen={isEditProfileOpen}
+          onClose={() => setIsEditProfileOpen(false)}
+          profile={profile}
+          pickedJobs={pickedJobs}
+          onSave={handleUpdateProfile}
+        />
+      )}
 
       {profile && (
         <ShareableResultCard
