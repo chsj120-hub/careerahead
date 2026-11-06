@@ -232,6 +232,7 @@ export const CharacterProfileCard: React.FC<CharacterProfileCardProps> = ({
                 : 'bg-gradient-to-b from-indigo-900 to-slate-800 shadow-indigo-950'
             }`}>
               <ChibiCharacter
+                customConfig={profile.avatarConfig}
                 title={cleanTitle}
                 code={profile.code}
                 size={84}

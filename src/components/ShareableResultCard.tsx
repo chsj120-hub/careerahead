@@ -348,6 +348,7 @@ export const ShareableResultCard: React.FC<ShareableResultCardProps> = ({
                 {/* 2D 2등신 사람 캐릭터 */}
                 <div className="py-0.5">
                   <ChibiCharacter
+                    customConfig={profile.avatarConfig}
                     title={cleanTitle}
                     code={profile.code}
                     size={105}
@@ -458,6 +459,15 @@ export const ShareableResultCard: React.FC<ShareableResultCardProps> = ({
                 </div>
               )}
             </div>
+
+            {profile.futureResolution && (
+              <div className="mt-1.5 p-1.5 rounded-lg bg-amber-50 border border-amber-200 text-left">
+                <span className="text-[8px] font-black text-amber-800 block">💬 10년 뒤 나의 다짐</span>
+                <p className="text-[8.5px] text-slate-700 font-medium leading-tight truncate">
+                  {profile.futureResolution}
+                </p>
+              </div>
+            )}
 
             {/* 초미니 Footer */}
             <div className="mt-1.5 pt-1 border-t border-slate-200 text-center">

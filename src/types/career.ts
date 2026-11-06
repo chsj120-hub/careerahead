@@ -86,6 +86,27 @@ export interface HexagonStats {
 
 export type ResultThemeKey = 'indigo' | 'white' | 'emerald' | 'sunset' | 'violet';
 
+// 봉봉미니 스타일 나만의 아바타 커스텀 설정
+export interface CustomAvatarConfig {
+  gender: 'boy' | 'girl';
+  face: 'smile' | 'sparkle' | 'wink' | 'confident';
+  hair: 'short_dandy' | 'comma' | 'bob' | 'ponytail' | 'long_wave' | 'two_block';
+  hairColor: string; // 헤어 컬러 hex
+  outfit: 'school' | 'hoodie' | 'doctor' | 'developer' | 'chef' | 'police' | 'creator' | 'suit';
+  accessory: 'none' | 'round' | 'square' | 'sunglasses';
+  item: 'none' | 'laptop' | 'stethoscope' | 'tablet' | 'book' | 'mic' | 'pan' | 'beaker';
+}
+
+export const DEFAULT_AVATAR_CONFIG: CustomAvatarConfig = {
+  gender: 'boy',
+  face: 'sparkle',
+  hair: 'short_dandy',
+  hairColor: '#1E293B',
+  outfit: 'school',
+  accessory: 'none',
+  item: 'none'
+};
+
 export interface CharacterProfile {
   code: string;           // 예: [L-T-R]
   title: string;          // 예: 초정밀 알고리즘 개척자 (또는 학생 직접 입력 칭호)
@@ -97,6 +118,7 @@ export interface CharacterProfile {
   recommendedJobs: Job[]; // 4~8개 엄선
   futureResolution?: string;         // 10년 뒤 나의 미래 모습 & 한 줄 다짐
   jobNotes?: Record<string, string>; // 내가 찜한 직업별 한 줄 메모/이유 (jobId -> 메모)
+  avatarConfig?: CustomAvatarConfig; // 봉봉미니 스타일 커스텀 아바타 설정
 }
 
 // 8단계 세분화 설문 상태 인터페이스
