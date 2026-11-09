@@ -23,22 +23,30 @@ const GENDER_OPTIONS: Array<{ id: 'boy' | 'girl'; label: string; icon: string }>
   { id: 'girl', label: '여학생', icon: '👧' }
 ];
 
-// 2. 얼굴 표정 옵션
+// 2. 얼굴 표정 옵션 (8종)
 const FACE_OPTIONS: Array<{ id: CustomAvatarConfig['face']; label: string; icon: string; desc: string }> = [
   { id: 'sparkle', label: '초롱초롱', icon: '✨', desc: '반짝이는 큰 눈망울' },
   { id: 'smile', label: '방긋 미소', icon: '😊', desc: '사랑스러운 눈웃음' },
   { id: 'wink', label: '깜찍 윙크', icon: '😉', desc: '장난기 가득 윙크' },
-  { id: 'confident', label: '당당·열정', icon: '😎', desc: '야무진 눈빛과 자신감' }
+  { id: 'confident', label: '당당·열정', icon: '😎', desc: '야무진 눈빛과 자신감' },
+  { id: 'focus', label: '연구·집중', icon: '🧐', desc: '지적이고 예리한 눈빛' },
+  { id: 'healing', label: '힐링·다정', icon: '🥰', desc: '따스하고 온화한 미소' },
+  { id: 'star_eyes', label: '반짝 감동', icon: '🤩', desc: '별빛 가득 꿈꾸는 눈' },
+  { id: 'playful', label: '장난꾸러기', icon: '😋', desc: '혀 쏙 내민 개구쟁이' }
 ];
 
-// 3. 헤어스타일 옵션
+// 3. 헤어스타일 옵션 (10종)
 const HAIR_OPTIONS: Array<{ id: CustomAvatarConfig['hair']; label: string; icon: string }> = [
   { id: 'short_dandy', label: '단정 숏컷', icon: '✂️' },
   { id: 'comma', label: '쉼표머리', icon: '💫' },
   { id: 'bob', label: '귀염 단발', icon: '💇‍♀️' },
   { id: 'ponytail', label: '포니테일', icon: '🎀' },
   { id: 'long_wave', label: '롱 웨이브', icon: '🌊' },
-  { id: 'two_block', label: '투블럭 컷', icon: '⚡' }
+  { id: 'two_block', label: '투블럭 컷', icon: '⚡' },
+  { id: 'leaf_part', label: '가르마 리프', icon: '🌿' },
+  { id: 'space_buns', label: '양갈래 번', icon: '🍡' },
+  { id: 'curly_perm', label: '쉐도우 펌', icon: '🦁' },
+  { id: 'pomade', label: '젠틀 포마드', icon: '👑' }
 ];
 
 // 4. 머리 색상 팔레트
@@ -51,7 +59,7 @@ const HAIR_COLOR_OPTIONS = [
   { color: '#6366F1', label: '미드나잇 블루' }
 ];
 
-// 5. 직업 의상 옵션
+// 5. 직업 의상 옵션 (12종)
 const OUTFIT_OPTIONS: Array<{ id: CustomAvatarConfig['outfit']; label: string; icon: string; badge: string }> = [
   { id: 'school', label: '단정 교복', icon: '🎒', badge: '학생' },
   { id: 'hoodie', label: '캐주얼 후드', icon: '🧥', badge: '자유' },
@@ -60,10 +68,14 @@ const OUTFIT_OPTIONS: Array<{ id: CustomAvatarConfig['outfit']; label: string; i
   { id: 'chef', label: '셰프 조리복', icon: '🍳', badge: '요리' },
   { id: 'police', label: '경찰/소방 제복', icon: '👮', badge: '공공' },
   { id: 'creator', label: '아티스트 멜빵', icon: '🎨', badge: '창작' },
-  { id: 'suit', label: '비즈니스 수트', icon: '💼', badge: '경영' }
+  { id: 'suit', label: '비즈니스 수트', icon: '💼', badge: '경영' },
+  { id: 'pilot', label: '파일럿 제복', icon: '✈️', badge: '항공' },
+  { id: 'engineer', label: '엔지니어 조끼', icon: '👷', badge: '공학' },
+  { id: 'judge', label: '법관/교수 법복', icon: '⚖️', badge: '법조' },
+  { id: 'athlete', label: '스포츠 져지', icon: '🏃', badge: '체육' }
 ];
 
-// 6. 손 소품 옵션
+// 6. 손 소품 옵션 (12종)
 const ITEM_OPTIONS: Array<{ id: CustomAvatarConfig['item']; label: string; icon: string }> = [
   { id: 'none', label: '소품 없음', icon: '❌' },
   { id: 'laptop', label: '미니 노트북', icon: '💻' },
@@ -72,7 +84,11 @@ const ITEM_OPTIONS: Array<{ id: CustomAvatarConfig['item']; label: string; icon:
   { id: 'book', label: '두툼한 전공책', icon: '📚' },
   { id: 'mic', label: '보컬 마이크', icon: '🎤' },
   { id: 'pan', label: '셰프 프라이팬', icon: '🍳' },
-  { id: 'beaker', label: '실험 플라스크', icon: '🧪' }
+  { id: 'beaker', label: '실험 플라스크', icon: '🧪' },
+  { id: 'airplane', label: '미니 제트기', icon: '✈️' },
+  { id: 'gavel', label: '정의의 법봉', icon: '⚖️' },
+  { id: 'controller', label: '게이밍 패드', icon: '🎮' },
+  { id: 'wrench', label: '만능 렌치', icon: '🔧' }
 ];
 
 // 7. 안경 옵션
@@ -386,7 +402,7 @@ export const EditFutureProfileModal: React.FC<EditFutureProfileModalProps> = ({
                     <label className="text-xs font-bold text-slate-700 block mb-2">
                       ① 헤어스타일 고르기:
                     </label>
-                    <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
+                    <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
                       {HAIR_OPTIONS.map((h) => (
                         <button
                           key={h.id}

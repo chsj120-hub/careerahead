@@ -89,12 +89,12 @@ export type ResultThemeKey = 'indigo' | 'white' | 'emerald' | 'sunset' | 'violet
 // 나만의 2D 진로 아바타 커스텀 설정
 export interface CustomAvatarConfig {
   gender: 'boy' | 'girl';
-  face: 'smile' | 'sparkle' | 'wink' | 'confident';
-  hair: 'short_dandy' | 'comma' | 'bob' | 'ponytail' | 'long_wave' | 'two_block';
+  face: 'smile' | 'sparkle' | 'wink' | 'confident' | 'focus' | 'healing' | 'star_eyes' | 'playful';
+  hair: 'short_dandy' | 'comma' | 'bob' | 'ponytail' | 'long_wave' | 'two_block' | 'leaf_part' | 'space_buns' | 'curly_perm' | 'pomade';
   hairColor: string; // 헤어 컬러 hex
-  outfit: 'school' | 'hoodie' | 'doctor' | 'developer' | 'chef' | 'police' | 'creator' | 'suit';
+  outfit: 'school' | 'hoodie' | 'doctor' | 'developer' | 'chef' | 'police' | 'creator' | 'suit' | 'pilot' | 'engineer' | 'judge' | 'athlete';
   accessory: 'none' | 'round' | 'square' | 'sunglasses';
-  item: 'none' | 'laptop' | 'stethoscope' | 'tablet' | 'book' | 'mic' | 'pan' | 'beaker';
+  item: 'none' | 'laptop' | 'stethoscope' | 'tablet' | 'book' | 'mic' | 'pan' | 'beaker' | 'airplane' | 'gavel' | 'controller' | 'wrench';
 }
 
 export const DEFAULT_AVATAR_CONFIG: CustomAvatarConfig = {
