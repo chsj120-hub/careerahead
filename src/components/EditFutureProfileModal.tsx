@@ -177,7 +177,7 @@ export const EditFutureProfileModal: React.FC<EditFutureProfileModalProps> = ({
             <div>
               <div className="flex items-center gap-2">
                 <h3 className="text-base sm:text-lg font-black text-white">
-                  나만의 봉봉미니 진로 아바타 스튜디오
+                  나만의 진로 아바타 스튜디오
                 </h3>
                 <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-400 text-slate-950">
                   수업 연계
@@ -202,7 +202,7 @@ export const EditFutureProfileModal: React.FC<EditFutureProfileModalProps> = ({
         <form onSubmit={handleSave} className="p-4 sm:p-6 overflow-y-auto space-y-5 flex-1 bg-slate-50/60">
           
           {/* ========================================================
-              Section 1: 실시간 2D 봉봉미니 아바타 커스텀 스튜디오
+              Section 1: 실시간 2D 진로 아바타 커스텀 스튜디오
              ======================================================== */}
           <div className="p-4 sm:p-5 rounded-3xl bg-white border-2 border-indigo-100 shadow-sm space-y-4">
             
@@ -608,7 +608,7 @@ export const EditFutureProfileModal: React.FC<EditFutureProfileModalProps> = ({
           <div className="p-3.5 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 text-xs flex items-start gap-2">
             <Lightbulb className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
             <p className="leading-relaxed">
-              <strong>선생님 & 학생 안내:</strong> 저장 버튼을 누르면 설정한 봉봉미니 캐릭터와 칭호, 미래 다짐, 메모가 저장되어 프로필 카드 및 모바일 1장 카드에 자동으로 나타납니다!
+              <strong>선생님 & 학생 안내:</strong> 저장 버튼을 누르면 설정한 나만의 캐릭터와 칭호, 미래 다짐, 메모가 저장되어 프로필 카드 및 모바일 1장 카드에 자동으로 나타납니다!
             </p>
           </div>
 

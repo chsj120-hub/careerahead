@@ -86,7 +86,7 @@ export interface HexagonStats {
 
 export type ResultThemeKey = 'indigo' | 'white' | 'emerald' | 'sunset' | 'violet';
 
-// 봉봉미니 스타일 나만의 아바타 커스텀 설정
+// 나만의 2D 진로 아바타 커스텀 설정
 export interface CustomAvatarConfig {
   gender: 'boy' | 'girl';
   face: 'smile' | 'sparkle' | 'wink' | 'confident';
@@ -118,7 +118,7 @@ export interface CharacterProfile {
   recommendedJobs: Job[]; // 4~8개 엄선
   futureResolution?: string;         // 10년 뒤 나의 미래 모습 & 한 줄 다짐
   jobNotes?: Record<string, string>; // 내가 찜한 직업별 한 줄 메모/이유 (jobId -> 메모)
-  avatarConfig?: CustomAvatarConfig; // 봉봉미니 스타일 커스텀 아바타 설정
+  avatarConfig?: CustomAvatarConfig; // 나만의 진로 아바타 설정
 }
 
 // 8단계 세분화 설문 상태 인터페이스

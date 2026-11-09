@@ -29,7 +29,7 @@ export const ChibiCharacter: React.FC<ChibiCharacterProps> = ({
     <div 
       className={`inline-flex items-center justify-center select-none ${className}`}
       style={{ width: size, height: size }}
-      aria-label={`${title || '진로 캐릭터'} 봉봉미니 2D 아바타`}
+      aria-label={`${title || '진로 캐릭터'} 2D 진로 아바타`}
     >
       <svg
         viewBox="0 0 120 130"
@@ -297,7 +297,7 @@ export const ChibiCharacter: React.FC<ChibiCharacterProps> = ({
           )}
         </g>
 
-        {/* 5. 봉봉미니 2등신 얼굴 베이스 (대두 & 발그레 볼터치) */}
+        {/* 5. 2등신 얼굴 베이스 (대두 & 발그레 볼터치) */}
         <g id="head-base">
           {/* 양쪽 귀 */}
           <circle cx="33" cy="52" r="5" fill="url(#skinGradV)" />
@@ -309,7 +309,7 @@ export const ChibiCharacter: React.FC<ChibiCharacterProps> = ({
             fill="url(#skinGradV)"
           />
 
-          {/* 발그레 핑크 볼터치 (봉봉 시그니처) */}
+          {/* 발그레 핑크 볼터치 */}
           <ellipse cx="43" cy="57" rx="5" ry="3" fill="#FF8A9E" opacity="0.6" />
           <ellipse cx="77" cy="57" rx="5" ry="3" fill="#FF8A9E" opacity="0.6" />
 
